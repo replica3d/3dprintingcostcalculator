@@ -5,7 +5,7 @@ import { CostDisplay } from './components/CostDisplay';
 import { ShareButton } from './components/ShareButton';
 import { ThemeToggle } from './components/ThemeToggle';
 import { AdvancedSettings } from './components/AdvancedSettings';
-import { DEFAULT_SETTINGS, MATERIALS } from './constants';
+import { DEFAULT_SETTINGS, MATERIALS, MATERIAL_PRICES } from './constants';
 import { calculateCosts } from './utils/calculations';
 import type { CalculatorInputs, CostBreakdown } from './types';
 
@@ -13,10 +13,10 @@ function App() {
   const [inputs, setInputs] = useState<CalculatorInputs>({
     partName: '',
     material: MATERIALS[0],
-    filamentCost: 20,
-    filamentWeight: 100,
-    printingTime: 4,
-    laborRequired: 15,
+    filamentCost: MATERIAL_PRICES[MATERIALS[0] as keyof typeof MATERIAL_PRICES],
+    filamentWeight: 0,
+    printingTime: 0,
+    laborRequired: 0,
     hardwareCost: 0,
     packagingCost: 0
   });
@@ -43,10 +43,20 @@ function App() {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setInputs(prev => ({
-      ...prev,
-      [name]: name === 'partName' ? value : parseFloat(value) || 0
-    }));
+    
+    if (name === 'material') {
+      const materialPrice = MATERIAL_PRICES[value as keyof typeof MATERIAL_PRICES];
+      setInputs(prev => ({
+        ...prev,
+        material: value,
+        filamentCost: materialPrice
+      }));
+    } else {
+      setInputs(prev => ({
+        ...prev,
+        [name]: name === 'partName' ? value : parseFloat(value) || 0
+      }));
+    }
   };
 
   const handleSettingChange = (name: string, value: number) => {
@@ -90,7 +100,7 @@ function App() {
               tooltip="Name or identifier for the part"
             />
             <InputField
-              label="Material Type"
+              label="Filament Type"
               name="material"
               icon={Box}
               value={inputs.material}
