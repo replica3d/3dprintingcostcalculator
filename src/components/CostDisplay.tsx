@@ -22,7 +22,7 @@ export function CostDisplay({ label, value, className = '', isHours = false, too
         )}
       </div>
       <div className="text-xl font-semibold">
-        {isHours ? Math.round(value) : `€${value.toFixed(2)}`}
+        {isHours ? Math.round(value) : `${value.toFixed(2)}`}
       </div>
     </div>
   );
