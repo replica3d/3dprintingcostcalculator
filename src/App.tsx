@@ -234,7 +234,7 @@ function App() {
             />
           </div>
 
-          <h2 className="text-xl font-semibold text-gray-800 mb-4">Suggested Retail Prices</h2>
+          <h2 className="text-xl font-semibold text-gray-800 mb-4">Suggested Pricing</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <CostDisplay 
