@@ -1,6 +1,15 @@
 import React from 'react';
 import { CostDisplay } from './CostDisplay';
-import type { CalculatedSettings } from '../constants';
+
+interface CalculatedSettings {
+  totalInvestment: number;
+  lifetimeCost: number;
+  estimatedUptimeHours: number;
+  printerDepreciation: number;
+  annualMaintenanceCost: number;
+  electricityCostPerHour: number;
+  printerCostPerHour: number;
+}
 
 interface AdvancedSettingsDisplayProps {
   calculatedSettings: CalculatedSettings;
@@ -12,44 +21,44 @@ export function AdvancedSettingsDisplay({ calculatedSettings }: AdvancedSettings
       <CostDisplay
         label="Total Investment"
         value={calculatedSettings.totalInvestment}
-        className="bg-gray-50 border border-gray-200"
+        className="bg-white dark:bg-[#2D2D2D] border border-gray-200 dark:border-gray-700"
         tooltip="Total initial investment including printer and additional equipment"
       />
       <CostDisplay
         label="Lifetime Cost"
         value={calculatedSettings.lifetimeCost}
-        className="bg-gray-50 border border-gray-200"
+        className="bg-white dark:bg-[#2D2D2D] border border-gray-200 dark:border-gray-700"
         tooltip="Total cost over the printer's lifetime including maintenance"
       />
       <CostDisplay
         label="Estimated Uptime (hrs/year)"
         value={calculatedSettings.estimatedUptimeHours}
-        className="bg-gray-50 border border-gray-200"
+        className="bg-white dark:bg-[#2D2D2D] border border-gray-200 dark:border-gray-700"
         isHours={true}
         tooltip="Expected annual printing hours based on uptime percentage"
       />
       <CostDisplay
         label="Printer Depreciation (€/hr)"
         value={calculatedSettings.printerDepreciation}
-        className="bg-gray-50 border border-gray-200"
+        className="bg-white dark:bg-[#2D2D2D] border border-gray-200 dark:border-gray-700"
         tooltip="Hourly cost of printer depreciation"
       />
       <CostDisplay
         label="Maintenance Cost (€/hr)"
         value={calculatedSettings.annualMaintenanceCost}
-        className="bg-gray-50 border border-gray-200"
+        className="bg-white dark:bg-[#2D2D2D] border border-gray-200 dark:border-gray-700"
         tooltip="Hourly maintenance cost based on annual estimates"
       />
       <CostDisplay
         label="Electricity Cost (€/hr)"
         value={calculatedSettings.electricityCostPerHour}
-        className="bg-gray-50 border border-gray-200"
+        className="bg-white dark:bg-[#2D2D2D] border border-gray-200 dark:border-gray-700"
         tooltip="Hourly electricity cost based on power consumption"
       />
       <CostDisplay
         label="Total Printer Cost (€/hr)"
         value={calculatedSettings.printerCostPerHour}
-        className="bg-blue-50 border border-blue-200"
+        className="bg-amber-100 dark:bg-[#3D3D2D] border border-amber-300 dark:border-amber-900"
         tooltip="Total hourly operating cost including all factors"
       />
     </div>

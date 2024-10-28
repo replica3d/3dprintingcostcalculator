@@ -23,13 +23,13 @@ export function ShareButton({ data }: ShareButtonProps) {
     <div className="flex flex-col items-center gap-2">
       <button
         onClick={generateShareUrl}
-        className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+        className="flex items-center gap-2 bg-blue-600 dark:bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors"
       >
         <Share2 className="w-4 h-4" />
         Share Calculator Settings
       </button>
       {shareUrl && (
-        <div className="text-sm text-gray-600">
+        <div className="text-sm text-gray-600 dark:text-gray-400">
           {copied ? 'URL copied to clipboard!' : 'Click to copy URL'}
         </div>
       )}

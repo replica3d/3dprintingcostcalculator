@@ -14,7 +14,7 @@ export function AdvancedSettings({ settings, onSettingChange }: AdvancedSettings
   const [isOpen, setIsOpen] = React.useState(false);
   const calculatedSettings = calculateAdvancedMetrics(settings);
 
-  const handleChange = (e: heact.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     onSettingChange(name, parseFloat(value) || 0);
   };
@@ -23,14 +23,14 @@ export function AdvancedSettings({ settings, onSettingChange }: AdvancedSettings
     <div className="mb-8">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium"
+        className="flex items-center gap-2 text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium transition-colors"
       >
         <Settings className="w-4 h-4" />
         {isOpen ? 'Hide Advanced Settings' : 'Show Advanced Settings'}
       </button>
 
       {isOpen && (
-        <div className="mt-4 bg-white rounded-lg shadow p-6">
+        <div className="mt-4 bg-white dark:bg-[#1E1E1E] rounded-lg shadow-lg p-6 transition-colors">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <InputField
               label="Material Efficiency Factor"
@@ -125,7 +125,7 @@ export function AdvancedSettings({ settings, onSettingChange }: AdvancedSettings
           </div>
           
           <div className="mt-8">
-            <h3 className="text-lg font-semibold text-gray-800 mb-4">Calculated Metrics</h3>
+            <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-50 mb-4">Calculated Metrics</h3>
             <AdvancedSettingsDisplay calculatedSettings={calculatedSettings} />
           </div>
         </div>

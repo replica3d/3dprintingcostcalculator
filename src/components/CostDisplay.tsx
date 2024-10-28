@@ -13,15 +13,15 @@ interface CostDisplayProps {
 export function CostDisplay({ label, value, className = '', isHours = false, tooltip }: CostDisplayProps) {
   return (
     <div className={`p-4 rounded-lg ${className}`}>
-      <div className="text-sm text-gray-600 flex items-center gap-1">
+      <div className="text-sm text-gray-600 dark:text-gray-400 flex items-center gap-1">
         {label}
         {tooltip && (
           <Tooltip content={tooltip}>
-            <HelpCircle className="w-4 h-4 text-gray-400 hover:text-gray-600 cursor-help" />
+            <HelpCircle className="w-4 h-4 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-400 cursor-help" />
           </Tooltip>
         )}
       </div>
-      <div className="text-xl font-semibold">
+      <div className="text-xl font-semibold text-gray-900 dark:text-white">
         {isHours ? 
           Math.round(value) : 
           `${value.toFixed(2)}€`
