@@ -58,7 +58,7 @@ export function AdvancedSettingsDisplay({ calculatedSettings }: AdvancedSettings
       <CostDisplay
         label="Total Printer Cost (€/hr)"
         value={calculatedSettings.printerCostPerHour}
-        className="bg-amber-100 dark:bg-[#3D3D2D] border border-amber-300 dark:border-amber-900"
+        className="bg-blue-100 dark:bg-[#2D2D3D] border border-blue-300 dark:border-blue-900"
         tooltip="Total hourly operating cost including all factors"
       />
     </div>

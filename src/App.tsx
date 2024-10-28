@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Package2, Timer, Wrench, Box, Calculator } from 'lucide-react';
 import { InputField } from './components/InputField';
 import { CostDisplay } from './components/CostDisplay';
@@ -22,6 +22,24 @@ function App() {
   });
 
   const [settings, setSettings] = useState(DEFAULT_SETTINGS);
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const sharedData = searchParams.get('data');
+    
+    if (sharedData) {
+      try {
+        const parsedData = JSON.parse(decodeURIComponent(sharedData));
+        if (parsedData.inputs) setInputs(parsedData.inputs);
+        if (parsedData.settings) setSettings(parsedData.settings);
+        
+        // Clean up URL after loading
+        window.history.replaceState({}, '', window.location.pathname);
+      } catch (error) {
+        console.error('Failed to parse shared data:', error);
+      }
+    }
+  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
