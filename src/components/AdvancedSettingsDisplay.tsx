@@ -21,38 +21,38 @@ export function AdvancedSettingsDisplay({ calculatedSettings }: AdvancedSettings
       <CostDisplay
         label="Total Investment"
         value={calculatedSettings.totalInvestment}
-        className="bg-white dark:bg-[#2D2D2D] border border-gray-200 dark:border-gray-700"
+        className="bg-white dark:bg-[#2D2D2D] border border-gray-200 dark:border-[#696969]"
         tooltip="Total initial investment including printer and additional equipment"
       />
       <CostDisplay
         label="Lifetime Cost"
         value={calculatedSettings.lifetimeCost}
-        className="bg-white dark:bg-[#2D2D2D] border border-gray-200 dark:border-gray-700"
+        className="bg-white dark:bg-[#2D2D2D] border border-gray-200 dark:border-[#696969]"
         tooltip="Total cost over the printer's lifetime including maintenance"
       />
       <CostDisplay
         label="Estimated Uptime (hrs/year)"
         value={calculatedSettings.estimatedUptimeHours}
-        className="bg-white dark:bg-[#2D2D2D] border border-gray-200 dark:border-gray-700"
+        className="bg-white dark:bg-[#2D2D2D] border border-gray-200 dark:border-[#696969]"
         isHours={true}
         tooltip="Expected annual printing hours based on uptime percentage"
       />
       <CostDisplay
         label="Printer Depreciation (€/hr)"
         value={calculatedSettings.printerDepreciation}
-        className="bg-white dark:bg-[#2D2D2D] border border-gray-200 dark:border-gray-700"
+        className="bg-white dark:bg-[#2D2D2D] border border-gray-200 dark:border-[#696969]"
         tooltip="Hourly cost of printer depreciation"
       />
       <CostDisplay
         label="Maintenance Cost (€/hr)"
         value={calculatedSettings.annualMaintenanceCost}
-        className="bg-white dark:bg-[#2D2D2D] border border-gray-200 dark:border-gray-700"
+        className="bg-white dark:bg-[#2D2D2D] border border-gray-200 dark:border-[#696969]"
         tooltip="Hourly maintenance cost based on annual estimates"
       />
       <CostDisplay
         label="Electricity Cost (€/hr)"
         value={calculatedSettings.electricityCostPerHour}
-        className="bg-white dark:bg-[#2D2D2D] border border-gray-200 dark:border-gray-700"
+        className="bg-white dark:bg-[#2D2D2D] border border-gray-200 dark:border-[#696969]"
         tooltip="Hourly electricity cost based on power consumption"
       />
       <CostDisplay

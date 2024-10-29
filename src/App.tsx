@@ -78,9 +78,12 @@ function App() {
       <ThemeToggle />
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-50 mb-2">
-            3D Printing Cost Calculator
-          </h1>
+          <div className="flex items-center justify-center gap-3 mb-2">
+            <Calculator className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-50">
+              3D Printing Cost Calculator
+            </h1>
+          </div>
           <p className="text-gray-600 dark:text-gray-400">
             Calculate accurate costs for your 3D printing projects
           </p>
@@ -178,19 +181,19 @@ function App() {
             <CostDisplay 
               label="Material Cost" 
               value={costs.materialCost} 
-              className="bg-white dark:bg-[#2D2D2D] shadow-sm border border-gray-200 dark:border-gray-700"
+              className="bg-white dark:bg-[#2D2D2D] shadow-sm border border-gray-200 dark:border-[#696969]"
               tooltip="Total cost of filament and hardware"
             />
             <CostDisplay 
               label="Labor Cost" 
               value={costs.laborCost} 
-              className="bg-white dark:bg-[#2D2D2D] shadow-sm border border-gray-200 dark:border-gray-700"
+              className="bg-white dark:bg-[#2D2D2D] shadow-sm border border-gray-200 dark:border-[#696969]"
               tooltip="Cost of time spent on preparation and post-processing"
             />
             <CostDisplay 
               label="Machine Cost" 
               value={costs.machineCost} 
-              className="bg-white dark:bg-[#2D2D2D] shadow-sm border border-gray-200 dark:border-gray-700"
+              className="bg-white dark:bg-[#2D2D2D] shadow-sm border border-gray-200 dark:border-[#696969]"
               tooltip="Cost of printer operation including depreciation and maintenance"
             />
             <CostDisplay 

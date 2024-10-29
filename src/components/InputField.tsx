@@ -48,7 +48,7 @@ export function InputField({
             name={name}
             value={value}
             onChange={onChange}
-            className="mt-1 block w-full rounded-md border-0 dark:border-0 shadow-sm ring-1 ring-inset ring-gray-200 dark:ring-gray-800 focus:ring-2 focus:ring-blue-500 bg-white dark:bg-[#2D2D2D] dark:text-gray-100 p-2 transition-colors"
+            className="mt-1 block w-full rounded-md border-0 dark:border-0 shadow-sm ring-1 ring-inset ring-gray-200 dark:ring-[#696969] focus:ring-2 focus:ring-blue-500 bg-white dark:bg-[#2D2D2D] dark:text-gray-100 p-2 transition-colors"
           >
             {options.map(option => (
               <option key={option} value={option}>{option}</option>
@@ -63,7 +63,7 @@ export function InputField({
               onChange={onChange}
               step={step}
               min="0"
-              className={`mt-1 block w-full rounded-md border-0 dark:border-0 shadow-sm ring-1 ring-inset ring-gray-200 dark:ring-gray-800 focus:ring-2 focus:ring-blue-500 bg-white dark:bg-[#2D2D2D] dark:text-gray-100 p-2 transition-colors ${unit ? 'pr-12' : ''}`}
+              className={`mt-1 block w-full rounded-md border-0 dark:border-0 shadow-sm ring-1 ring-inset ring-gray-200 dark:ring-[#696969] focus:ring-2 focus:ring-blue-500 bg-white dark:bg-[#2D2D2D] dark:text-gray-100 p-2 transition-colors ${unit ? 'pr-12' : ''}`}
             />
             {unit && (
               <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400">

@@ -11,8 +11,11 @@ interface CostDisplayProps {
 }
 
 export function CostDisplay({ label, value, className = '', isHours = false, tooltip }: CostDisplayProps) {
+  const defaultClass = 'bg-white dark:bg-[#2D2D2D] border border-gray-200 dark:border-[#696969]';
+  const finalClassName = className.includes('border') ? className.replace(/border-gray-\d+/g, 'dark:border-[#696969]') : `${defaultClass} ${className}`;
+
   return (
-    <div className={`p-4 rounded-lg ${className}`}>
+    <div className={`p-4 rounded-lg ${finalClassName}`}>
       <div className="text-sm text-gray-600 dark:text-gray-400 flex items-center gap-1">
         {label}
         {tooltip && (
