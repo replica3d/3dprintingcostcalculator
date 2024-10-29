@@ -14,11 +14,11 @@ function App() {
     partName: '',
     material: MATERIALS[0],
     filamentCost: MATERIAL_PRICES[MATERIALS[0] as keyof typeof MATERIAL_PRICES],
-    filamentWeight: 0,
-    printingTime: 0,
-    laborRequired: 0,
-    hardwareCost: 0,
-    packagingCost: 0
+    filamentWeight: '',
+    printingTime: '',
+    laborRequired: '',
+    hardwareCost: '',
+    packagingCost: ''
   });
 
   const [settings, setSettings] = useState(DEFAULT_SETTINGS);
@@ -54,7 +54,7 @@ function App() {
     } else {
       setInputs(prev => ({
         ...prev,
-        [name]: name === 'partName' ? value : parseFloat(value) || 0
+        [name]: name === 'partName' ? value : value === '' ? '' : parseFloat(value) || 0
       }));
     }
   };
@@ -66,7 +66,14 @@ function App() {
     }));
   };
 
-  const costs: CostBreakdown = calculateCosts(inputs, settings);
+  const costs: CostBreakdown = calculateCosts({
+    ...inputs,
+    filamentWeight: Number(inputs.filamentWeight) || 0,
+    printingTime: Number(inputs.printingTime) || 0,
+    laborRequired: Number(inputs.laborRequired) || 0,
+    hardwareCost: Number(inputs.hardwareCost) || 0,
+    packagingCost: Number(inputs.packagingCost) || 0
+  }, settings);
 
   const shareData = {
     inputs,
@@ -74,9 +81,9 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-[#121212] py-12 px-4 sm:px-6 lg:px-8 transition-colors">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#121212] py-6 sm:py-12 px-4 sm:px-6 lg:px-8 transition-colors">
       <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-8">
+        <div className="text-center mb-6 sm:mb-8">
           <div className="flex items-center justify-between md:justify-center md:gap-3 w-full">
             <Calculator className="w-8 h-8 text-blue-600 dark:text-blue-400" />
             <h1 className="text-3xl font-bold text-[#121212] dark:text-gray-50">
@@ -91,7 +98,7 @@ function App() {
           </p>
         </div>
 
-        <div className="bg-white dark:bg-[#1E1E1E] rounded-xl shadow-lg p-6 mb-8">
+        <div className="bg-white dark:bg-[#1E1E1E] rounded-xl shadow-lg p-4 sm:p-6 mb-6 sm:mb-8">
           <h2 className="text-xl font-semibold text-[#121212] dark:text-gray-50 mb-4">Project Details</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -176,7 +183,7 @@ function App() {
           onSettingChange={handleSettingChange}
         />
 
-        <div className="bg-white dark:bg-[#1E1E1E] rounded-xl shadow-lg p-6">
+        <div className="bg-white dark:bg-[#1E1E1E] rounded-xl shadow-lg p-4 sm:p-6">
           <h2 className="text-xl font-semibold text-[#121212] dark:text-gray-50 mb-4">Cost Breakdown</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
@@ -230,7 +237,7 @@ function App() {
           </div>
         </div>
 
-        <div className="mt-8 flex justify-center">
+        <div className="mt-6 sm:mt-8 flex justify-center">
           <ShareButton data={shareData} />
         </div>
       </div>
