@@ -3,7 +3,11 @@ export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   darkMode: 'class',
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'dark-text': 'rgba(255, 255, 255, 0.87)'
+      }
+    },
   },
   plugins: [],
 };

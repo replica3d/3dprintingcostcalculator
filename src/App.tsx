@@ -79,18 +79,20 @@ function App() {
         <div className="text-center mb-8">
           <div className="flex items-center justify-between md:justify-center md:gap-3 w-full">
             <Calculator className="w-8 h-8 text-blue-600 dark:text-blue-400" />
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-50">
-              3D Printing Cost Calculator
+            <h1 className="text-3xl font-bold text-[#121212] dark:text-gray-50">
+              <a href="/" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                3D Printing Cost Calculator
+              </a>
             </h1>
             <ThemeToggle className="md:absolute md:right-4 md:top-4" />
           </div>
-          <p className="text-gray-600 dark:text-gray-400 mt-2">
+          <p className="text-[#121212] dark:text-gray-400 mt-2">
             Calculate accurate costs for your 3D printing projects
           </p>
         </div>
 
         <div className="bg-white dark:bg-[#1E1E1E] rounded-xl shadow-lg p-6 mb-8">
-          <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-50 mb-4">Project Details</h2>
+          <h2 className="text-xl font-semibold text-[#121212] dark:text-gray-50 mb-4">Project Details</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <InputField
@@ -175,7 +177,7 @@ function App() {
         />
 
         <div className="bg-white dark:bg-[#1E1E1E] rounded-xl shadow-lg p-6">
-          <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-50 mb-4">Cost Breakdown</h2>
+          <h2 className="text-xl font-semibold text-[#121212] dark:text-gray-50 mb-4">Cost Breakdown</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
             <CostDisplay 
@@ -204,7 +206,7 @@ function App() {
             />
           </div>
 
-          <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-50 mb-4">Suggested Pricing</h2>
+          <h2 className="text-xl font-semibold text-[#121212] dark:text-gray-50 mb-4">Suggested Pricing</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <CostDisplay 
