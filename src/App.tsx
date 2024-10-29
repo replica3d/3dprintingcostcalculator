@@ -75,16 +75,16 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-[#121212] py-12 px-4 sm:px-6 lg:px-8 transition-colors">
-      <ThemeToggle />
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-8">
-          <div className="flex items-center justify-center gap-3 mb-2">
+          <div className="flex items-center justify-between md:justify-center md:gap-3 w-full">
             <Calculator className="w-8 h-8 text-blue-600 dark:text-blue-400" />
             <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-50">
               3D Printing Cost Calculator
             </h1>
+            <ThemeToggle className="md:absolute md:right-4 md:top-4" />
           </div>
-          <p className="text-gray-600 dark:text-gray-400">
+          <p className="text-gray-600 dark:text-gray-400 mt-2">
             Calculate accurate costs for your 3D printing projects
           </p>
         </div>
