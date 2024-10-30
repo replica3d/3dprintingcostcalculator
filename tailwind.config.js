@@ -5,7 +5,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        'dark-text': 'rgba(255, 255, 255, 0.87)'
+        'dark-text': '#FAFAFA'
       }
     },
   },

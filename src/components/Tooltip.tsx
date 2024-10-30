@@ -18,7 +18,7 @@ export function Tooltip({ children, content }: TooltipProps) {
       </div>
       {isVisible && (
         <div 
-          className="absolute z-10 px-3 py-2 text-sm font-medium text-white bg-gray-900 dark:bg-[#1E1E1E] rounded-lg shadow-sm tooltip -top-2 -translate-y-full left-1/2 -translate-x-1/2 w-48"
+          className="absolute z-10 px-3 py-2 text-sm font-medium text-dark-text bg-gray-900 dark:bg-[#1E1E1E] rounded-lg shadow-sm tooltip -top-2 -translate-y-full left-1/2 -translate-x-1/2 w-48"
           style={{ pointerEvents: 'none' }}
         >
           {content}

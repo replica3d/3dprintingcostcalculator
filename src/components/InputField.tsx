@@ -35,14 +35,14 @@ export function InputField({
     <div className="mb-4">
       <label 
         htmlFor={inputId}
-        className="block text-sm font-medium text-[#121212] dark:text-dark-text mb-1"
+        className="block text-base font-medium text-[#121212] dark:text-dark-text mb-1"
       >
         <div className="flex items-center gap-2">
           <Icon className="w-4 h-4" />
           <span>{label}</span>
           {tooltip && (
             <Tooltip content={tooltip}>
-              <HelpCircle className="w-4 h-4 text-gray-400 dark:text-dark-text hover:text-[#121212] dark:hover:text-white cursor-help" />
+              <HelpCircle className="w-4 h-4 text-gray-400 dark:text-dark-text hover:text-[#121212] dark:hover:text-dark-text cursor-help" />
             </Tooltip>
           )}
         </div>
@@ -55,7 +55,7 @@ export function InputField({
             value={value}
             onChange={onChange}
             aria-labelledby={`${inputId}-label`}
-            className="mt-1 block w-full rounded-md border-0 dark:border-0 shadow-sm ring-1 ring-inset ring-gray-200 dark:ring-[#696969] focus:ring-2 focus:ring-blue-500 bg-white dark:bg-[#2D2D2D] text-[#121212] dark:text-dark-text py-[0.4375rem] px-2 transition-colors h-[42px]"
+            className="mt-1 block w-full rounded-md border-0 dark:border-0 shadow-sm ring-1 ring-inset ring-gray-200 dark:ring-[#696969] focus:ring-2 focus:ring-blue-500 bg-white dark:bg-[#2D2D2D] text-[#121212] dark:text-dark-text py-[0.4375rem] px-2 transition-colors h-[42px] text-base"
           >
             {options.map(option => (
               <option key={option} value={option}>{option}</option>
@@ -72,10 +72,10 @@ export function InputField({
               step={step}
               min="0"
               aria-labelledby={`${inputId}-label`}
-              className={`mt-1 block w-full rounded-md border-0 dark:border-0 shadow-sm ring-1 ring-inset ring-gray-200 dark:ring-[#696969] focus:ring-2 focus:ring-blue-500 bg-white dark:bg-[#2D2D2D] text-[#121212] dark:text-dark-text p-2 transition-colors [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none h-[42px] ${unit ? 'pr-12' : ''}`}
+              className={`mt-1 block w-full rounded-md border-0 dark:border-0 shadow-sm ring-1 ring-inset ring-gray-200 dark:ring-[#696969] focus:ring-2 focus:ring-blue-500 bg-white dark:bg-[#2D2D2D] text-[#121212] dark:text-dark-text p-2 transition-colors [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none h-[42px] text-base ${unit ? 'pr-12' : ''}`}
             />
             {unit && (
-              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[#121212] dark:text-dark-text">
+              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[#121212] dark:text-dark-text text-base">
                 {unit}
               </span>
             )}

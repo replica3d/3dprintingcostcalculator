@@ -125,7 +125,7 @@ export function AdvancedSettings({ settings, onSettingChange }: AdvancedSettings
           </div>
           
           <div className="mt-8">
-            <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-50 mb-4">Calculated Metrics</h3>
+            <h3 className="text-lg font-semibold text-gray-800 dark:text-dark-text mb-4">Calculated Metrics</h3>
             <AdvancedSettingsDisplay calculatedSettings={calculatedSettings} />
           </div>
         </div>

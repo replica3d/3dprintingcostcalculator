@@ -20,11 +20,11 @@ export function CostDisplay({ label, value, className = '', isHours = false, too
         {label}
         {tooltip && (
           <Tooltip content={tooltip}>
-            <HelpCircle className="w-4 h-4 text-gray-400 dark:text-dark-text hover:text-[#121212] dark:hover:text-white cursor-help" />
+            <HelpCircle className="w-4 h-4 text-gray-400 dark:text-dark-text hover:text-[#121212] dark:hover:text-dark-text cursor-help" />
           </Tooltip>
         )}
       </div>
-      <div className="text-xl font-semibold text-[#121212] dark:text-white">
+      <div className="text-xl font-semibold text-[#121212] dark:text-dark-text">
         {isHours ? 
           Math.round(value) : 
           `${value.toFixed(2)}€`
