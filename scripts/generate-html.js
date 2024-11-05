@@ -3,6 +3,13 @@ import { join, resolve } from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
+function injectH1(html, title) {
+  return html.replace(
+    '<div id="root"></div>',
+    `<h1 class="sr-only">${title}</h1>\n    <div id="root"></div>`
+  );
+}
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -72,17 +79,6 @@ function generateAlternateLinks() {
   `;
 }
 
-function generateH1(translation) {
-  return `<h1 class="sr-only">${translation.meta.title}</h1>`;
-}
-
-function injectH1(html, translation) {
-  return html.replace(
-    '<div id="root"></div>',
-    `${generateH1(translation)}\n<div id="root"></div>`
-  );
-}
-
 async function generateLanguageFiles() {
   try {
     // Read the base HTML template
@@ -107,8 +103,8 @@ async function generateLanguageFiles() {
     // Add language alternates to root
     rootHtml = rootHtml.replace('</head>', `${generateAlternateLinks()}\n</head>`);
 
-    // Add h1 tag for English homepage
-    rootHtml = injectH1(rootHtml, enTranslation);
+    // Add screen reader only h1 for English homepage
+    rootHtml = injectH1(rootHtml, enTranslation.meta.title);
 
     // Save root index.html
     await writeFile(join(DIST_DIR, 'index.html'), rootHtml, 'utf-8');
@@ -138,8 +134,8 @@ async function generateLanguageFiles() {
       // Add language alternates
       langHtml = langHtml.replace('</head>', `${generateAlternateLinks()}\n</head>`);
 
-      // Add h1 tag for language-specific page
-      langHtml = injectH1(langHtml, t);
+      // Add screen reader only h1 for language-specific page
+      langHtml = injectH1(langHtml, t.meta.title);
 
       // Create language directory and save file
       const langDir = join(DIST_DIR, lang);
