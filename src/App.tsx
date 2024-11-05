@@ -5,6 +5,8 @@ import { CostDisplay } from './components/CostDisplay';
 import { ShareButton } from './components/ShareButton';
 import { ThemeToggle } from './components/ThemeToggle';
 import { AdvancedSettings } from './components/AdvancedSettings';
+import { HowToUseGuide } from './components/HowToUseGuide';
+import { FAQ } from './components/FAQ';
 import { DEFAULT_SETTINGS, MATERIALS, MATERIAL_PRICES } from './constants';
 import { calculateCosts } from './utils/calculations';
 import type { CalculatorInputs, CostBreakdown } from './types';
@@ -33,7 +35,6 @@ function App() {
         if (parsedData.inputs) setInputs(parsedData.inputs);
         if (parsedData.settings) setSettings(parsedData.settings);
         
-        // Clean up URL after loading
         window.history.replaceState({}, '', window.location.pathname);
       } catch (error) {
         console.error('Failed to parse shared data:', error);
@@ -98,6 +99,7 @@ function App() {
           </p>
         </div>
 
+        {/* Main Calculator Section */}
         <div className="bg-white dark:bg-[#1E1E1E] rounded-xl shadow-lg p-4 sm:p-6 mb-6 sm:mb-8">
           <h2 className="text-xl font-semibold text-[#121212] dark:text-gray-50 mb-4">Project Details</h2>
           
@@ -183,6 +185,7 @@ function App() {
           onSettingChange={handleSettingChange}
         />
 
+        {/* Cost Breakdown Section */}
         <div className="bg-white dark:bg-[#1E1E1E] rounded-xl shadow-lg p-4 sm:p-6">
           <h2 className="text-xl font-semibold text-[#121212] dark:text-gray-50 mb-4">Cost Breakdown</h2>
           
@@ -240,6 +243,9 @@ function App() {
         <div className="mt-6 sm:mt-8 flex justify-center">
           <ShareButton data={shareData} />
         </div>
+
+        <HowToUseGuide />
+        <FAQ />
       </div>
     </div>
   );
