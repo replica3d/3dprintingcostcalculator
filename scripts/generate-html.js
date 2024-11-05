@@ -123,7 +123,6 @@ async function generateLanguageFiles() {
         .replace(META_TAGS.twitterTitle, `<meta name="twitter:title" content="${t.meta.title}"`)
         .replace(META_TAGS.twitterDescription, `<meta name="twitter:description" content="${t.meta.description}"`)
         .replace(META_TAGS.canonical, `<link rel="canonical" href="${canonicalUrl}"`)
-        .replace(META_TAGS.root, `<h1 class="sr-only">${t.meta.title}</h1><div id="root"></div>`);
 
       // Add language alternates
       langHtml = langHtml.replace('</head>', `${generateAlternateLinks()}\n</head>`);
