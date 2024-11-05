@@ -73,8 +73,8 @@ function generateAlternateLinks() {
 }
 
 function addVisuallyHiddenH1(html, translation) {
-  // Replace closing body tag with h1 + closing body tag
-  return html.replace('</body>', `<h1 class="sr-only">${translation.meta.title}</h1></body>`);
+  // Replace root div with h1 + root div to maintain proper document structure
+  return html.replace('<div id="root"></div>', `<h1 class="sr-only">${translation.meta.title}</h1>\n    <div id="root"></div>`);
 }
 
 async function generateLanguageFiles() {
