@@ -114,13 +114,9 @@ function App() {
 
       <div className="min-h-screen bg-gray-50 dark:bg-[#121212] py-6 sm:py-12 px-4 sm:px-6 lg:px-8 transition-colors">
         <div className="max-w-4xl mx-auto">
-          {/* SEO-friendly h1 that's visually hidden but accessible to screen readers */}
-          <h1 className="sr-only">{t.meta.h1}</h1>
-
           <div className="text-center mb-6 sm:mb-8">
             <div className="flex items-center justify-between w-full">
               <Calculator className="w-8 h-8 text-blue-600 dark:text-blue-400" />
-              {/* Visible title styled as h1 but semantically a div */}
               <div className="text-3xl font-bold text-[#121212] dark:text-gray-50">
                 {t.calculator.title}
               </div>
