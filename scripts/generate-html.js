@@ -102,10 +102,10 @@ async function generateLanguageFiles() {
     // Add language alternates to root
     rootHtml = rootHtml.replace('</head>', `${generateAlternateLinks()}\n</head>`);
 
-    // Add h1 tag to root
+    // Add h1 tag to root (before the root div)
     rootHtml = rootHtml.replace(
-      '<body class="antialiased">',
-      `<body class="antialiased">\n<h1 class="sr-only">${enTranslation.meta.h1}</h1>`
+      '<div id="root"></div>',
+      `<h1 class="sr-only">${enTranslation.meta.h1}</h1>\n<div id="root"></div>`
     );
 
     // Save root index.html
@@ -136,10 +136,10 @@ async function generateLanguageFiles() {
       // Add language alternates
       langHtml = langHtml.replace('</head>', `${generateAlternateLinks()}\n</head>`);
 
-      // Add h1 tag
+      // Add h1 tag (before the root div)
       langHtml = langHtml.replace(
-        '<body class="antialiased">',
-        `<body class="antialiased">\n<h1 class="sr-only">${t.meta.h1}</h1>`
+        '<div id="root"></div>',
+        `<h1 class="sr-only">${t.meta.h1}</h1>\n<div id="root"></div>`
       );
 
       // Create language directory and save file
