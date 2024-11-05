@@ -3,13 +3,6 @@ import { join, resolve } from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
-function injectH1(html, title) {
-  return html.replace(
-    '<div id="root"></div>',
-    `<h1 class="sr-only">${title}</h1>\n    <div id="root"></div>`
-  );
-}
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -103,9 +96,6 @@ async function generateLanguageFiles() {
     // Add language alternates to root
     rootHtml = rootHtml.replace('</head>', `${generateAlternateLinks()}\n</head>`);
 
-    // Add screen reader only h1 for English homepage
-    rootHtml = injectH1(rootHtml, enTranslation.meta.title);
-
     // Save root index.html
     await writeFile(join(DIST_DIR, 'index.html'), rootHtml, 'utf-8');
     console.log('✓ Generated root HTML');
@@ -133,9 +123,6 @@ async function generateLanguageFiles() {
 
       // Add language alternates
       langHtml = langHtml.replace('</head>', `${generateAlternateLinks()}\n</head>`);
-
-      // Add screen reader only h1 for language-specific page
-      langHtml = injectH1(langHtml, t.meta.title);
 
       // Create language directory and save file
       const langDir = join(DIST_DIR, lang);
