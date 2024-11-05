@@ -102,7 +102,7 @@ async function generateLanguageFiles() {
     // Add language alternates to root
     rootHtml = rootHtml.replace('</head>', `${generateAlternateLinks()}\n</head>`);
 
-    // Add h1 tag to root (before the root div)
+    // Add English h1 tag to root
     rootHtml = rootHtml.replace(
       '<div id="root"></div>',
       `<h1 class="sr-only">${enTranslation.meta.h1}</h1>\n<div id="root"></div>`
@@ -135,6 +135,12 @@ async function generateLanguageFiles() {
 
       // Add language alternates
       langHtml = langHtml.replace('</head>', `${generateAlternateLinks()}\n</head>`);
+
+      // Add language-specific h1 tag
+      langHtml = langHtml.replace(
+        '<div id="root"></div>',
+        `<h1 class="sr-only">${t.meta.h1}</h1>\n<div id="root"></div>`
+      );
 
       // Create language directory and save file
       const langDir = join(DIST_DIR, lang);
