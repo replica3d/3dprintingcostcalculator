@@ -14,37 +14,42 @@ const BASE_URL = 'https://3dprintingcostcalculator.com';
 const translations = {
   en: {
     meta: {
-      title: "3D Printing Cost Calculator",
+      title: "3D Printing Cost Calculator - Profit Margin & Pricing Tool",
       description: "Calculate 3D printing costs with precision. Estimate material, labor, and machine expenses to optimize your pricing strategy.",
-      keywords: "3D printing, cost calculator, pricing tool, manufacturing costs, material costs, labor costs, machine costs, profit margins, 3D printer, filament calculator"
+      keywords: "3D printing, cost calculator, pricing tool, manufacturing costs, material costs, labor costs, machine costs, profit margins, 3D printer, filament calculator",
+      h1: "3D Printing Cost Calculator - Professional Cost Estimation Tool"
     }
   },
   es: {
     meta: {
-      title: "Calculadora de Costos de Impresión 3D",
+      title: "Calculadora de Costos de Impresión 3D - Herramienta de Márgenes y Precios",
       description: "Calcule los costos de impresión 3D con precisión. Estime materiales, mano de obra y gastos de máquina para optimizar su estrategia de precios.",
-      keywords: "impresión 3D, calculadora de costos, herramienta de precios, costos de fabricación, costos de materiales, costos de mano de obra, costos de máquina, márgenes de beneficio, impresora 3D, calculadora de filamento"
+      keywords: "impresión 3D, calculadora de costos, herramienta de precios, costos de fabricación, costos de materiales, costos de mano de obra, costos de máquina, márgenes de beneficio, impresora 3D, calculadora de filamento",
+      h1: "Calculadora de Costos de Impresión 3D - Herramienta Profesional de Estimación"
     }
   },
   de: {
     meta: {
-      title: "3D-Druck Kostenrechner",
+      title: "3D-Druck Kostenrechner - Gewinnspanne & Preiskalkulation",
       description: "Berechnen Sie 3D-Druckkosten mit höchster Präzision. Schätzen Sie Material-, Arbeits- und Maschinenkosten für eine optimale Preisstrategie.",
-      keywords: "3D-Druck, Kostenrechner, Preiswerkzeug, Herstellungskosten, Materialkosten, Arbeitskosten, Maschinenkosten, Gewinnmargen, 3D-Drucker, Filamentrechner"
+      keywords: "3D-Druck, Kostenrechner, Preiswerkzeug, Herstellungskosten, Materialkosten, Arbeitskosten, Maschinenkosten, Gewinnmargen, 3D-Drucker, Filamentrechner",
+      h1: "3D-Druck Kostenrechner - Professionelles Kostenschätzungstool"
     }
   },
   fr: {
     meta: {
-      title: "Calculateur de Coûts d'Impression 3D",
+      title: "Calculateur de Coûts d'Impression 3D - Outil de Marge et Tarification",
       description: "Calculez les coûts d'impression 3D avec précision. Optimisez votre stratégie de prix en analysant les coûts de matériaux, main-d'œuvre et exploitation.",
-      keywords: "impression 3D, calculateur de coûts, outil de tarification, coûts de fabrication, coûts des matériaux, coûts de main-d'œuvre, coûts machine, marges bénéficiaires, imprimante 3D, calculateur de filament"
+      keywords: "impression 3D, calculateur de coûts, outil de tarification, coûts de fabrication, coûts des matériaux, coûts de main-d'œuvre, coûts machine, marges bénéficiaires, imprimante 3D, calculateur de filament",
+      h1: "Calculateur de Coûts d'Impression 3D - Outil Professionnel d'Estimation"
     }
   },
   it: {
     meta: {
-      title: "Calcolatore Costi Stampa 3D",
+      title: "Calcolatore Costi Stampa 3D - Strumento per Margini e Prezzi",
       description: "Calcola i costi di stampa 3D con precisione. Ottimizza la tua strategia di prezzo analizzando materiali, manodopera e costi operativi.",
-      keywords: "stampa 3D, calcolatore costi, strumento prezzi, costi produzione, costi materiali, costi manodopera, costi macchina, margini profitto, stampante 3D, calcolatore filamento"
+      keywords: "stampa 3D, calcolatore costi, strumento prezzi, costi produzione, costi materiali, costi manodopera, costi macchina, margini profitto, stampante 3D, calcolatore filamento",
+      h1: "Calcolatore Costi Stampa 3D - Strumento Professionale di Stima"
     }
   }
 };
@@ -79,10 +84,41 @@ async function generateLanguageFiles() {
     const templatePath = join(DIST_DIR, 'index.html');
     let templateHtml = await readFile(templatePath, 'utf-8');
 
+    // First, update the root index.html with English content
+    let rootHtml = templateHtml;
+    const enTranslation = translations.en;
+    rootHtml = rootHtml
+      .replace(META_TAGS.htmlLang, `<html lang="en"`)
+      .replace(META_TAGS.title, `<title>${enTranslation.meta.title}</title>`)
+      .replace(META_TAGS.description, `<meta name="description" content="${enTranslation.meta.description}"`)
+      .replace(META_TAGS.keywords, `<meta name="keywords" content="${enTranslation.meta.keywords}"`)
+      .replace(META_TAGS.ogTitle, `<meta property="og:title" content="${enTranslation.meta.title}"`)
+      .replace(META_TAGS.ogDescription, `<meta property="og:description" content="${enTranslation.meta.description}"`)
+      .replace(META_TAGS.ogUrl, `<meta property="og:url" content="${BASE_URL}"`)
+      .replace(META_TAGS.twitterTitle, `<meta name="twitter:title" content="${enTranslation.meta.title}"`)
+      .replace(META_TAGS.twitterDescription, `<meta name="twitter:description" content="${enTranslation.meta.description}"`)
+      .replace(META_TAGS.canonical, `<link rel="canonical" href="${BASE_URL}"`);
+
+    // Add language alternates to root
+    rootHtml = rootHtml.replace('</head>', `${generateAlternateLinks()}\n</head>`);
+
+    // Add h1 tag to root
+    rootHtml = rootHtml.replace(
+      '<body class="antialiased">',
+      `<body class="antialiased">\n<h1 class="sr-only">${enTranslation.meta.h1}</h1>`
+    );
+
+    // Save root index.html
+    await writeFile(join(DIST_DIR, 'index.html'), rootHtml, 'utf-8');
+    console.log('✓ Generated root HTML');
+
+    // Generate language-specific files
     for (const lang of LANGUAGES) {
+      if (lang === 'en') continue; // Skip English as it's already handled in root
+
       const t = translations[lang];
       let langHtml = templateHtml;
-      const canonicalUrl = lang === 'en' ? BASE_URL : `${BASE_URL}/${lang}`;
+      const canonicalUrl = `${BASE_URL}/${lang}`;
 
       // Update meta tags
       langHtml = langHtml
@@ -98,8 +134,13 @@ async function generateLanguageFiles() {
         .replace(META_TAGS.canonical, `<link rel="canonical" href="${canonicalUrl}"`);
 
       // Add language alternates
-      const alternateLinks = generateAlternateLinks();
-      langHtml = langHtml.replace('</head>', `${alternateLinks}\n</head>`);
+      langHtml = langHtml.replace('</head>', `${generateAlternateLinks()}\n</head>`);
+
+      // Add h1 tag
+      langHtml = langHtml.replace(
+        '<body class="antialiased">',
+        `<body class="antialiased">\n<h1 class="sr-only">${t.meta.h1}</h1>`
+      );
 
       // Create language directory and save file
       const langDir = join(DIST_DIR, lang);
