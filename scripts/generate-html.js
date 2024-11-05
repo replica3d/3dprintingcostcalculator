@@ -72,6 +72,13 @@ function generateAlternateLinks() {
   `;
 }
 
+function addVisuallyHiddenH1(html, title) {
+  return html.replace(
+    '</div></body>',
+    `</div><h1 class="sr-only">${title}</h1></body>`
+  );
+}
+
 async function generateLanguageFiles() {
   try {
     // Read the base HTML template
