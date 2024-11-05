@@ -74,8 +74,8 @@ function generateAlternateLinks() {
 
 function addVisuallyHiddenH1(html, title) {
   return html.replace(
-    '</div></body>',
-    `</div><h1 class="sr-only">${title}</h1></body>`
+    '<div id="root"></div>',
+    `<div id="root"></div><h1 class="sr-only">${title}</h1>`
   );
 }
 
@@ -88,6 +88,7 @@ async function generateLanguageFiles() {
     // Update the root index.html with English content
     let rootHtml = templateHtml;
     const enTranslation = translations.en;
+    rootHtml = addVisuallyHiddenH1(rootHtml, enTranslation.meta.title);
     rootHtml = rootHtml
       .replace(META_TAGS.htmlLang, `<html lang="en"`)
       .replace(META_TAGS.title, `<title>${enTranslation.meta.title}</title>`)
@@ -114,6 +115,7 @@ async function generateLanguageFiles() {
       const t = translations[lang];
       let langHtml = templateHtml;
       const canonicalUrl = `${BASE_URL}/${lang}`;
+      langHtml = addVisuallyHiddenH1(langHtml, t.meta.title);
 
       // Update meta tags
       langHtml = langHtml
