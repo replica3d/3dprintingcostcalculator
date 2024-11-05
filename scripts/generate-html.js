@@ -74,8 +74,8 @@ function generateAlternateLinks() {
 
 function addVisuallyHiddenH1(html, title) {
   return html.replace(
-    '</body>',
-    `<h1 class="sr-only">${title}</h1></body>`
+    '</div></body>',
+    `</div><h1 class="sr-only">${title}</h1></body>`
   );
 }
 
@@ -116,6 +116,7 @@ async function generateLanguageFiles() {
       const canonicalUrl = `${BASE_URL}/${lang}`;
 
       // Update meta tags
+      langHtml = langHtml
         .replace(META_TAGS.htmlLang, `<html lang="${lang}"`)
         .replace(META_TAGS.title, `<title>${t.meta.title}</title>`)
         .replace(META_TAGS.description, `<meta name="description" content="${t.meta.description}"`)

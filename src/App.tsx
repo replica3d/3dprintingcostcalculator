@@ -120,9 +120,10 @@ function App() {
           <div className="text-center mb-6 sm:mb-8">
             <div className="flex items-center justify-between w-full">
               <Calculator className="w-8 h-8 text-blue-600 dark:text-blue-400" />
-              <h1 className="text-3xl font-bold text-[#121212] dark:text-gray-50">
+              {/* Visible title styled as h1 but semantically a div */}
+              <div className="text-3xl font-bold text-[#121212] dark:text-gray-50">
                 {t.calculator.title}
-              </h1>
+              </div>
               <div className="flex items-center gap-4">
                 <ThemeToggle />
               </div>
