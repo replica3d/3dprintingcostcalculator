@@ -103,10 +103,10 @@ async function generateLanguageFiles() {
     rootHtml = rootHtml.replace('</head>', `${generateAlternateLinks()}\n</head>`);
 
     // Add h1 tag to root (before the root div)
-    rootHtml = rootHtml.replace(
-      '<div id="root"></div>',
-      `<h1 class="sr-only">${enTranslation.meta.h1}</h1>\n<div id="root"></div>`
-    );
+    //rootHtml = rootHtml.replace(
+    // '<div id="root"></div>',
+    //  `<h1 class="sr-only">${enTranslation.meta.h1}</h1>\n<div id="root"></div>`
+    //);
 
     // Save root index.html
     await writeFile(join(DIST_DIR, 'index.html'), rootHtml, 'utf-8');
