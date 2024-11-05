@@ -10,7 +10,6 @@ const DIST_DIR = resolve(__dirname, '../dist');
 const LANGUAGES = ['en', 'es', 'de', 'fr', 'it'];
 const BASE_URL = 'https://3dprintingcostcalculator.com';
 
-// Translations need to be imported directly since we can't use the index.ts in Node
 const translations = {
   en: {
     meta: {
@@ -59,8 +58,7 @@ const META_TAGS = {
   twitterTitle: /<meta\s+name="twitter:title"\s+content="(.*?)"/,
   twitterDescription: /<meta\s+name="twitter:description"\s+content="(.*?)"/,
   htmlLang: /<html\s+lang="(.*?)"/,
-  canonical: /<link\s+rel="canonical"\s+href="(.*?)"/,
-  root: /<div id="root"><\/div>/
+  canonical: /<link\s+rel="canonical"\s+href="(.*?)"/
 };
 
 function generateAlternateLinks() {
@@ -72,6 +70,12 @@ function generateAlternateLinks() {
     <link rel="alternate" hrefLang="it" href="${BASE_URL}/it" />
     <link rel="alternate" hrefLang="x-default" href="${BASE_URL}" />
   `;
+}
+
+function insertH1AndRoot(html, title) {
+  const rootDiv = '<div id="root"></div>';
+  const h1AndRoot = `<h1 class="sr-only">${title}</h1>${rootDiv}`;
+  return html.replace(rootDiv, h1AndRoot);
 }
 
 async function generateLanguageFiles() {
@@ -93,10 +97,13 @@ async function generateLanguageFiles() {
       .replace(META_TAGS.ogUrl, `<meta property="og:url" content="${BASE_URL}"`)
       .replace(META_TAGS.twitterTitle, `<meta name="twitter:title" content="${enTranslation.meta.title}"`)
       .replace(META_TAGS.twitterDescription, `<meta name="twitter:description" content="${enTranslation.meta.description}"`)
-      .replace(META_TAGS.canonical, `<link rel="canonical" href="${BASE_URL}"`)
+      .replace(META_TAGS.canonical, `<link rel="canonical" href="${BASE_URL}"`);
 
     // Add language alternates to root
     rootHtml = rootHtml.replace('</head>', `${generateAlternateLinks()}\n</head>`);
+
+    // Add h1 to root
+    rootHtml = insertH1AndRoot(rootHtml, enTranslation.meta.title);
 
     // Save root index.html
     await writeFile(join(DIST_DIR, 'index.html'), rootHtml, 'utf-8');
@@ -110,7 +117,7 @@ async function generateLanguageFiles() {
       let langHtml = templateHtml;
       const canonicalUrl = `${BASE_URL}/${lang}`;
 
-      // Update meta tags and h1
+      // Update meta tags
       langHtml = langHtml
         .replace(META_TAGS.htmlLang, `<html lang="${lang}"`)
         .replace(META_TAGS.title, `<title>${t.meta.title}</title>`)
@@ -121,11 +128,13 @@ async function generateLanguageFiles() {
         .replace(META_TAGS.ogUrl, `<meta property="og:url" content="${canonicalUrl}"`)
         .replace(META_TAGS.twitterTitle, `<meta name="twitter:title" content="${t.meta.title}"`)
         .replace(META_TAGS.twitterDescription, `<meta name="twitter:description" content="${t.meta.description}"`)
-        .replace(META_TAGS.canonical, `<link rel="canonical" href="${canonicalUrl}"`)
-        .replace(META_TAGS.root, `<h1 class="sr-only">${t.meta.title}</h1><div id="root"></div>`);
+        .replace(META_TAGS.canonical, `<link rel="canonical" href="${canonicalUrl}"`);
 
       // Add language alternates
       langHtml = langHtml.replace('</head>', `${generateAlternateLinks()}\n</head>`);
+
+      // Add h1 to language page
+      langHtml = insertH1AndRoot(langHtml, t.meta.title);
 
       // Create language directory and save file
       const langDir = join(DIST_DIR, lang);
