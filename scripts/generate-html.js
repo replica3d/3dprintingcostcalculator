@@ -72,11 +72,9 @@ function generateAlternateLinks() {
   `;
 }
 
-function addVisuallyHiddenH1(html, title) {
-  return html.replace(
-    '</div></body>',
-    `</div><h1 class="sr-only">${title}</h1></body>`
-  );
+function addVisuallyHiddenH1(html, translation) {
+  // Replace closing body tag with h1 + closing body tag
+  return html.replace('</body>', `<h1 class="sr-only">${translation.meta.title}</h1></body>`);
 }
 
 async function generateLanguageFiles() {
@@ -85,8 +83,8 @@ async function generateLanguageFiles() {
     const templatePath = join(DIST_DIR, 'index.html');
     let templateHtml = await readFile(templatePath, 'utf-8');
 
-    // Update the root index.html with English content
     let rootHtml = templateHtml;
+    rootHtml = addVisuallyHiddenH1(rootHtml, enTranslation);
     const enTranslation = translations.en;
     rootHtml = rootHtml
       .replace(META_TAGS.htmlLang, `<html lang="en"`)
