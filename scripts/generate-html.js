@@ -16,40 +16,35 @@ const translations = {
     meta: {
       title: "3D Printing Cost Calculator - Profit Margin & Pricing Tool",
       description: "Calculate 3D printing costs with precision. Estimate material, labor, and machine expenses to optimize your pricing strategy.",
-      keywords: "3D printing, cost calculator, pricing tool, manufacturing costs, material costs, labor costs, machine costs, profit margins, 3D printer, filament calculator",
-      h1: "3D Printing Cost Calculator - Professional Cost Estimation Tool"
+      keywords: "3D printing, cost calculator, pricing tool, manufacturing costs, material costs, labor costs, machine costs, profit margins, 3D printer, filament calculator"
     }
   },
   es: {
     meta: {
       title: "Calculadora de Costos de Impresión 3D - Herramienta de Márgenes y Precios",
       description: "Calcule los costos de impresión 3D con precisión. Estime materiales, mano de obra y gastos de máquina para optimizar su estrategia de precios.",
-      keywords: "impresión 3D, calculadora de costos, herramienta de precios, costos de fabricación, costos de materiales, costos de mano de obra, costos de máquina, márgenes de beneficio, impresora 3D, calculadora de filamento",
-      h1: "Calculadora de Costos de Impresión 3D - Herramienta Profesional de Estimación"
+      keywords: "impresión 3D, calculadora de costos, herramienta de precios, costos de fabricación, costos de materiales, costos de mano de obra, costos de máquina, márgenes de beneficio, impresora 3D, calculadora de filamento"
     }
   },
   de: {
     meta: {
       title: "3D-Druck Kostenrechner - Gewinnspanne & Preiskalkulation",
       description: "Berechnen Sie 3D-Druckkosten mit höchster Präzision. Schätzen Sie Material-, Arbeits- und Maschinenkosten für eine optimale Preisstrategie.",
-      keywords: "3D-Druck, Kostenrechner, Preiswerkzeug, Herstellungskosten, Materialkosten, Arbeitskosten, Maschinenkosten, Gewinnmargen, 3D-Drucker, Filamentrechner",
-      h1: "3D-Druck Kostenrechner - Professionelles Kostenschätzungstool"
+      keywords: "3D-Druck, Kostenrechner, Preiswerkzeug, Herstellungskosten, Materialkosten, Arbeitskosten, Maschinenkosten, Gewinnmargen, 3D-Drucker, Filamentrechner"
     }
   },
   fr: {
     meta: {
       title: "Calculateur de Coûts d'Impression 3D - Outil de Marge et Tarification",
       description: "Calculez les coûts d'impression 3D avec précision. Optimisez votre stratégie de prix en analysant les coûts de matériaux, main-d'œuvre et exploitation.",
-      keywords: "impression 3D, calculateur de coûts, outil de tarification, coûts de fabrication, coûts des matériaux, coûts de main-d'œuvre, coûts machine, marges bénéficiaires, imprimante 3D, calculateur de filament",
-      h1: "Calculateur de Coûts d'Impression 3D - Outil Professionnel d'Estimation"
+      keywords: "impression 3D, calculateur de coûts, outil de tarification, coûts de fabrication, coûts des matériaux, coûts de main-d'œuvre, coûts machine, marges bénéficiaires, imprimante 3D, calculateur de filament"
     }
   },
   it: {
     meta: {
       title: "Calcolatore Costi Stampa 3D - Strumento per Margini e Prezzi",
       description: "Calcola i costi di stampa 3D con precisione. Ottimizza la tua strategia di prezzo analizzando materiali, manodopera e costi operativi.",
-      keywords: "stampa 3D, calcolatore costi, strumento prezzi, costi produzione, costi materiali, costi manodopera, costi macchina, margini profitto, stampante 3D, calcolatore filamento",
-      h1: "Calcolatore Costi Stampa 3D - Strumento Professionale di Stima"
+      keywords: "stampa 3D, calcolatore costi, strumento prezzi, costi produzione, costi materiali, costi manodopera, costi macchina, margini profitto, stampante 3D, calcolatore filamento"
     }
   }
 };
@@ -65,7 +60,7 @@ const META_TAGS = {
   twitterDescription: /<meta\s+name="twitter:description"\s+content="(.*?)"/,
   htmlLang: /<html\s+lang="(.*?)"/,
   canonical: /<link\s+rel="canonical"\s+href="(.*?)"/,
-  h1: /<div id="root"><\/div>/
+  root: /<div id="root"><\/div>/
 };
 
 function generateAlternateLinks() {
@@ -99,7 +94,7 @@ async function generateLanguageFiles() {
       .replace(META_TAGS.twitterTitle, `<meta name="twitter:title" content="${enTranslation.meta.title}"`)
       .replace(META_TAGS.twitterDescription, `<meta name="twitter:description" content="${enTranslation.meta.description}"`)
       .replace(META_TAGS.canonical, `<link rel="canonical" href="${BASE_URL}"`)
-      .replace(META_TAGS.h1, `<h1 class="sr-only">${enTranslation.meta.h1}</h1><div id="root"></div>`);
+      .replace(META_TAGS.root, `<h1 class="sr-only">${enTranslation.meta.title}</h1><div id="root"></div>`);
 
     // Add language alternates to root
     rootHtml = rootHtml.replace('</head>', `${generateAlternateLinks()}\n</head>`);
@@ -128,7 +123,7 @@ async function generateLanguageFiles() {
         .replace(META_TAGS.twitterTitle, `<meta name="twitter:title" content="${t.meta.title}"`)
         .replace(META_TAGS.twitterDescription, `<meta name="twitter:description" content="${t.meta.description}"`)
         .replace(META_TAGS.canonical, `<link rel="canonical" href="${canonicalUrl}"`)
-        .replace(META_TAGS.h1, `<h1 class="sr-only">${t.meta.h1}</h1><div id="root"></div>`);
+        .replace(META_TAGS.root, `<h1 class="sr-only">${t.meta.title}</h1><div id="root"></div>`);
 
       // Add language alternates
       langHtml = langHtml.replace('</head>', `${generateAlternateLinks()}\n</head>`);
