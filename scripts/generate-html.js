@@ -102,12 +102,6 @@ async function generateLanguageFiles() {
     // Add language alternates to root
     rootHtml = rootHtml.replace('</head>', `${generateAlternateLinks()}\n</head>`);
 
-    // Add English h1 tag to root
-    rootHtml = rootHtml.replace(
-      '<div id="root"></div>',
-      `<h1 class="sr-only">${enTranslation.meta.h1}</h1>\n<div id="root"></div>`
-    );
-
     // Save root index.html
     await writeFile(join(DIST_DIR, 'index.html'), rootHtml, 'utf-8');
     console.log('✓ Generated root HTML');
