@@ -58,7 +58,8 @@ const META_TAGS = {
   twitterTitle: /<meta\s+name="twitter:title"\s+content="(.*?)"/,
   twitterDescription: /<meta\s+name="twitter:description"\s+content="(.*?)"/,
   htmlLang: /<html\s+lang="(.*?)"/,
-  canonical: /<link\s+rel="canonical"\s+href="(.*?)"/
+  canonical: /<link\s+rel="canonical"\s+href="(.*?)"/,
+  root: /<div id="root"><\/div>/
 };
 
 function generateAlternateLinks() {
@@ -72,19 +73,13 @@ function generateAlternateLinks() {
   `;
 }
 
-function insertH1AndRoot(html, title) {
-  const rootDiv = '<div id="root"></div>';
-  const h1AndRoot = `<h1 class="sr-only">${title}</h1>${rootDiv}`;
-  return html.replace(rootDiv, h1AndRoot);
-}
-
 async function generateLanguageFiles() {
   try {
     // Read the base HTML template
     const templatePath = join(DIST_DIR, 'index.html');
     let templateHtml = await readFile(templatePath, 'utf-8');
 
-    // First, update the root index.html with English content
+    // Update the root index.html with H1 for English content
     let rootHtml = templateHtml;
     const enTranslation = translations.en;
     rootHtml = rootHtml
@@ -97,19 +92,17 @@ async function generateLanguageFiles() {
       .replace(META_TAGS.ogUrl, `<meta property="og:url" content="${BASE_URL}"`)
       .replace(META_TAGS.twitterTitle, `<meta name="twitter:title" content="${enTranslation.meta.title}"`)
       .replace(META_TAGS.twitterDescription, `<meta name="twitter:description" content="${enTranslation.meta.description}"`)
-      .replace(META_TAGS.canonical, `<link rel="canonical" href="${BASE_URL}"`);
+      .replace(META_TAGS.canonical, `<link rel="canonical" href="${BASE_URL}"`)
+      .replace(META_TAGS.root, `<h1 class="sr-only">${enTranslation.meta.title}</h1><div id="root"></div>`);
 
     // Add language alternates to root
     rootHtml = rootHtml.replace('</head>', `${generateAlternateLinks()}\n</head>`);
-
-    // Add h1 to root
-    rootHtml = insertH1AndRoot(rootHtml, enTranslation.meta.title);
 
     // Save root index.html
     await writeFile(join(DIST_DIR, 'index.html'), rootHtml, 'utf-8');
     console.log('✓ Generated root HTML');
 
-    // Generate language-specific files
+    // Generate language-specific files with their own H1 tags
     for (const lang of LANGUAGES) {
       if (lang === 'en') continue; // Skip English as it's already handled in root
 
@@ -117,7 +110,7 @@ async function generateLanguageFiles() {
       let langHtml = templateHtml;
       const canonicalUrl = `${BASE_URL}/${lang}`;
 
-      // Update meta tags
+      // Update meta tags and add an H1 specific to each language page
       langHtml = langHtml
         .replace(META_TAGS.htmlLang, `<html lang="${lang}"`)
         .replace(META_TAGS.title, `<title>${t.meta.title}</title>`)
@@ -128,13 +121,11 @@ async function generateLanguageFiles() {
         .replace(META_TAGS.ogUrl, `<meta property="og:url" content="${canonicalUrl}"`)
         .replace(META_TAGS.twitterTitle, `<meta name="twitter:title" content="${t.meta.title}"`)
         .replace(META_TAGS.twitterDescription, `<meta name="twitter:description" content="${t.meta.description}"`)
-        .replace(META_TAGS.canonical, `<link rel="canonical" href="${canonicalUrl}"`);
+        .replace(META_TAGS.canonical, `<link rel="canonical" href="${canonicalUrl}"`)
+        .replace(META_TAGS.root, `<h1 class="sr-only">${t.meta.title}</h1><div id="root"></div>`);
 
       // Add language alternates
       langHtml = langHtml.replace('</head>', `${generateAlternateLinks()}\n</head>`);
-
-      // Add h1 to language page
-      langHtml = insertH1AndRoot(langHtml, t.meta.title);
 
       // Create language directory and save file
       const langDir = join(DIST_DIR, lang);
