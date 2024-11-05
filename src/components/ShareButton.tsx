@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Share2, Check, Copy } from 'lucide-react';
+import { Share2, Check } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 interface ShareButtonProps {
   data: Record<string, any>;
@@ -7,6 +8,7 @@ interface ShareButtonProps {
 
 export function ShareButton({ data }: ShareButtonProps) {
   const [copied, setCopied] = useState(false);
+  const { t } = useLanguage();
 
   const generateShareUrl = async () => {
     const baseUrl = window.location.origin + window.location.pathname;
@@ -30,12 +32,12 @@ export function ShareButton({ data }: ShareButtonProps) {
       {copied ? (
         <>
           <Check className="w-4 h-4" />
-          Copied!
+          {t.share.copied}
         </>
       ) : (
         <>
           <Share2 className="w-4 h-4" />
-          Share Calculator Settings
+          {t.share.button}
         </>
       )}
     </button>

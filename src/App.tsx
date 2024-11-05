@@ -4,14 +4,17 @@ import { InputField } from './components/InputField';
 import { CostDisplay } from './components/CostDisplay';
 import { ShareButton } from './components/ShareButton';
 import { ThemeToggle } from './components/ThemeToggle';
+import { LanguageSwitcher } from './components/LanguageSwitcher';
 import { AdvancedSettings } from './components/AdvancedSettings';
 import { HowToUseGuide } from './components/HowToUseGuide';
 import { FAQ } from './components/FAQ';
 import { DEFAULT_SETTINGS, MATERIALS, MATERIAL_PRICES } from './constants';
 import { calculateCosts } from './utils/calculations';
+import { useLanguage } from './context/LanguageContext';
 import type { CalculatorInputs, CostBreakdown } from './types';
 
 function App() {
+  const { t } = useLanguage();
   const [inputs, setInputs] = useState<CalculatorInputs>({
     partName: '',
     material: MATERIALS[0],
@@ -26,6 +29,9 @@ function App() {
   const [settings, setSettings] = useState(DEFAULT_SETTINGS);
 
   useEffect(() => {
+    document.title = t.meta.title;
+    document.querySelector('meta[name="description"]')?.setAttribute('content', t.meta.description);
+    
     const searchParams = new URLSearchParams(window.location.search);
     const sharedData = searchParams.get('data');
     
@@ -40,7 +46,7 @@ function App() {
         console.error('Failed to parse shared data:', error);
       }
     }
-  }, []);
+  }, [t]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -85,96 +91,102 @@ function App() {
     <div className="min-h-screen bg-gray-50 dark:bg-[#121212] py-6 sm:py-12 px-4 sm:px-6 lg:px-8 transition-colors">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-6 sm:mb-8">
-          <div className="flex items-center justify-between md:justify-center md:gap-3 w-full">
+          <div className="flex items-center justify-between w-full">
             <Calculator className="w-8 h-8 text-blue-600 dark:text-blue-400" />
             <h1 className="text-3xl font-bold text-[#121212] dark:text-gray-50">
               <a href="/" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                3D Printing Cost Calculator
+                {t.calculator.title}
               </a>
             </h1>
-            <ThemeToggle className="md:absolute md:right-4 md:top-4" />
+            <div className="flex items-center gap-4">
+              <ThemeToggle />
+            </div>
           </div>
-          <p className="text-[#121212] dark:text-gray-400 mt-2">
-            Calculate accurate costs for your 3D printing projects
+          <p className="text-[#121212] dark:text-gray-400 mt-2 mb-4">
+            {t.calculator.subtitle}
           </p>
+          <div className="flex justify-center">
+            <LanguageSwitcher />
+          </div>
         </div>
 
-        {/* Main Calculator Section */}
         <div className="bg-white dark:bg-[#1E1E1E] rounded-xl shadow-lg p-4 sm:p-6 mb-6 sm:mb-8">
-          <h2 className="text-xl font-semibold text-[#121212] dark:text-gray-50 mb-4">Project Details</h2>
+          <h2 className="text-xl font-semibold text-[#121212] dark:text-gray-50 mb-4">
+            {t.calculator.projectDetails}
+          </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <InputField
-              label="Part Name"
+              label={t.inputs.partName}
               name="partName"
               type="text"
               icon={Package2}
               value={inputs.partName}
               onChange={handleInputChange}
-              tooltip="Name or identifier for the part"
+              tooltip={t.tooltips.partName}
             />
             <InputField
-              label="Filament Type"
+              label={t.inputs.material}
               name="material"
               icon={Box}
               value={inputs.material}
               onChange={handleInputChange}
               isSelect={true}
               options={MATERIALS}
-              tooltip="Type of filament being used"
+              tooltip={t.tooltips.material}
             />
             <InputField
-              label="Filament Cost"
+              label={t.inputs.filamentCost}
               name="filamentCost"
               icon={Calculator}
               value={inputs.filamentCost}
               onChange={handleInputChange}
-              tooltip="Cost per kg of filament"
+              tooltip={t.tooltips.filamentCost}
               unit="€/kg"
             />
             <InputField
-              label="Filament Weight"
+              label={t.inputs.filamentWeight}
               name="filamentWeight"
               icon={Package2}
               value={inputs.filamentWeight}
               onChange={handleInputChange}
-              tooltip="Estimated weight of the print"
+              tooltip={t.tooltips.filamentWeight}
               unit="g"
             />
             <InputField
-              label="Printing Time"
+              label={t.inputs.printingTime}
               name="printingTime"
               icon={Timer}
               value={inputs.printingTime}
               onChange={handleInputChange}
-              tooltip="Estimated print duration"
+              tooltip={t.tooltips.printingTime}
               unit="hrs"
             />
             <InputField
-              label="Labor Time"
+              label={t.inputs.laborTime}
               name="laborRequired"
               icon={Wrench}
               value={inputs.laborRequired}
               onChange={handleInputChange}
-              tooltip="Time spent on preparation and post-processing"
+              tooltip={t.tooltips.laborTime}
               unit="min"
             />
             <InputField
-              label="Hardware Cost"
+              label={t.inputs.hardwareCost}
               name="hardwareCost"
               icon={Package2}
               value={inputs.hardwareCost}
               onChange={handleInputChange}
-              tooltip="Cost of additional hardware (screws, inserts, etc.)"
+              tooltip={t.tooltips.hardwareCost}
               unit="€"
             />
             <InputField
-              label="Packaging Cost"
+              label={t.inputs.packagingCost}
               name="packagingCost"
               icon={Box}
               value={inputs.packagingCost}
               onChange={handleInputChange}
-              tooltip="Cost of packaging materials"
+              tooltip={t.tooltips.packagingCost}
               unit="€"
             />
           </div>
@@ -185,57 +197,57 @@ function App() {
           onSettingChange={handleSettingChange}
         />
 
-        {/* Cost Breakdown Section */}
         <div className="bg-white dark:bg-[#1E1E1E] rounded-xl shadow-lg p-4 sm:p-6">
-          <h2 className="text-xl font-semibold text-[#121212] dark:text-gray-50 mb-4">Cost Breakdown</h2>
+          <h2 className="text-xl font-semibold text-[#121212] dark:text-gray-50 mb-4">
+            {t.calculator.costBreakdown}
+          </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
             <CostDisplay 
-              label="Material Cost" 
+              label={t.costs.materialCost}
               value={costs.materialCost} 
               className="bg-white dark:bg-[#2D2D2D] shadow-sm border border-gray-200 dark:border-[#696969]"
-              tooltip="Total cost of filament and hardware"
+              tooltip={t.tooltips.hardwareCost}
             />
             <CostDisplay 
-              label="Labor Cost" 
+              label={t.costs.laborCost}
               value={costs.laborCost} 
               className="bg-white dark:bg-[#2D2D2D] shadow-sm border border-gray-200 dark:border-[#696969]"
-              tooltip="Cost of time spent on preparation and post-processing"
+              tooltip={t.tooltips.laborTime}
             />
             <CostDisplay 
-              label="Machine Cost" 
+              label={t.costs.machineCost}
               value={costs.machineCost} 
               className="bg-white dark:bg-[#2D2D2D] shadow-sm border border-gray-200 dark:border-[#696969]"
-              tooltip="Cost of printer operation including depreciation and maintenance"
+              tooltip={t.tooltips.printingTime}
             />
             <CostDisplay 
-              label="Total Landed Cost" 
+              label={t.costs.totalLandedCost}
               value={costs.landedCost} 
               className="bg-red-100 dark:bg-[#3D2D2D] border border-red-300 dark:border-red-900"
-              tooltip="Total cost including materials, labor, machine time, and packaging"
+              tooltip={t.tooltips.packagingCost}
             />
           </div>
 
-          <h2 className="text-xl font-semibold text-[#121212] dark:text-gray-50 mb-4">Suggested Pricing</h2>
+          <h2 className="text-xl font-semibold text-[#121212] dark:text-gray-50 mb-4">
+            {t.calculator.suggestedPricing}
+          </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <CostDisplay 
-              label="50% Profit Margin" 
+              label={t.costs.margin50}
               value={costs.margin50} 
               className="bg-green-100 dark:bg-[#2D3D2D] border border-green-300 dark:border-green-900"
-              tooltip="Recommended selling price for 50% profit margin"
             />
             <CostDisplay 
-              label="60% Profit Margin" 
+              label={t.costs.margin60}
               value={costs.margin60} 
               className="bg-blue-100 dark:bg-[#2D2D3D] border border-blue-300 dark:border-blue-900"
-              tooltip="Recommended selling price for 60% profit margin"
             />
             <CostDisplay 
-              label="70% Profit Margin" 
+              label={t.costs.margin70}
               value={costs.margin70} 
               className="bg-purple-100 dark:bg-[#3D2D3D] border border-purple-300 dark:border-purple-900"
-              tooltip="Recommended selling price for 70% profit margin"
             />
           </div>
         </div>

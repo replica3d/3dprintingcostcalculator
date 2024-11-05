@@ -1,5 +1,6 @@
 import React from 'react';
 import { CostDisplay } from './CostDisplay';
+import { useLanguage } from '../context/LanguageContext';
 
 interface CalculatedSettings {
   totalInvestment: number;
@@ -16,50 +17,52 @@ interface AdvancedSettingsDisplayProps {
 }
 
 export function AdvancedSettingsDisplay({ calculatedSettings }: AdvancedSettingsDisplayProps) {
+  const { t } = useLanguage();
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
       <CostDisplay
-        label="Total Investment"
+        label={t.advanced.metrics.totalInvestment}
         value={calculatedSettings.totalInvestment}
         className="bg-white dark:bg-[#2D2D2D] border border-gray-200 dark:border-[#696969]"
-        tooltip="Total initial investment including printer and additional equipment"
+        tooltip={t.tooltips.totalInvestment}
       />
       <CostDisplay
-        label="Lifetime Cost"
+        label={t.advanced.metrics.lifetimeCost}
         value={calculatedSettings.lifetimeCost}
         className="bg-white dark:bg-[#2D2D2D] border border-gray-200 dark:border-[#696969]"
-        tooltip="Total cost over the printer's lifetime including maintenance"
+        tooltip={t.tooltips.lifetimeCost}
       />
       <CostDisplay
-        label="Estimated Uptime (hrs/year)"
+        label={t.advanced.metrics.uptimeHours}
         value={calculatedSettings.estimatedUptimeHours}
         className="bg-white dark:bg-[#2D2D2D] border border-gray-200 dark:border-[#696969]"
         isHours={true}
-        tooltip="Expected annual printing hours based on uptime percentage"
+        tooltip={t.tooltips.uptimeHours}
       />
       <CostDisplay
-        label="Printer Depreciation (€/hr)"
+        label={t.advanced.metrics.depreciation}
         value={calculatedSettings.printerDepreciation}
         className="bg-white dark:bg-[#2D2D2D] border border-gray-200 dark:border-[#696969]"
-        tooltip="Hourly cost of printer depreciation"
+        tooltip={t.tooltips.depreciation}
       />
       <CostDisplay
-        label="Maintenance Cost (€/hr)"
+        label={t.advanced.metrics.maintenanceCost}
         value={calculatedSettings.annualMaintenanceCost}
         className="bg-white dark:bg-[#2D2D2D] border border-gray-200 dark:border-[#696969]"
-        tooltip="Hourly maintenance cost based on annual estimates"
+        tooltip={t.tooltips.maintenanceCost}
       />
       <CostDisplay
-        label="Electricity Cost (€/hr)"
+        label={t.advanced.metrics.electricityCost}
         value={calculatedSettings.electricityCostPerHour}
         className="bg-white dark:bg-[#2D2D2D] border border-gray-200 dark:border-[#696969]"
-        tooltip="Hourly electricity cost based on power consumption"
+        tooltip={t.tooltips.electricityCostHourly}
       />
       <CostDisplay
-        label="Total Printer Cost (€/hr)"
+        label={t.advanced.metrics.totalCost}
         value={calculatedSettings.printerCostPerHour}
         className="bg-yellow-100 dark:bg-yellow-900/30 border border-yellow-300 dark:border-yellow-900"
-        tooltip="Total hourly operating cost including all factors"
+        tooltip={t.tooltips.totalCostHourly}
       />
     </div>
   );

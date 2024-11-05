@@ -3,6 +3,7 @@ import { Settings } from 'lucide-react';
 import { InputField } from './InputField';
 import { AdvancedSettingsDisplay } from './AdvancedSettingsDisplay';
 import { calculateAdvancedMetrics } from '../utils/calculations';
+import { useLanguage } from '../context/LanguageContext';
 import type { PrinterSettings } from '../constants';
 
 interface AdvancedSettingsProps {
@@ -12,6 +13,7 @@ interface AdvancedSettingsProps {
 
 export function AdvancedSettings({ settings, onSettingChange }: AdvancedSettingsProps) {
   const [isOpen, setIsOpen] = React.useState(false);
+  const { t } = useLanguage();
   const calculatedSettings = calculateAdvancedMetrics(settings);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,106 +28,108 @@ export function AdvancedSettings({ settings, onSettingChange }: AdvancedSettings
         className="flex items-center gap-2 text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium transition-colors"
       >
         <Settings className="w-4 h-4" />
-        {isOpen ? 'Hide Advanced Settings' : 'Show Advanced Settings'}
+        {isOpen ? t.advanced.hide : t.advanced.show}
       </button>
 
       {isOpen && (
         <div className="mt-4 bg-white dark:bg-[#1E1E1E] rounded-lg shadow-lg p-6 transition-colors">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <InputField
-              label="Material Efficiency Factor"
+              label={t.advanced.materialEfficiency}
               name="MATERIAL_EFFICIENCY"
               icon={Settings}
               value={settings.MATERIAL_EFFICIENCY}
               onChange={handleChange}
-              tooltip="Accounts for material waste and failed prints (1.1 = 10% waste)"
+              tooltip={t.tooltips.materialEfficiency}
               unit="x"
             />
             <InputField
-              label="Labor Rate"
+              label={t.advanced.laborRate}
               name="LABOR_RATE"
               icon={Settings}
               value={settings.LABOR_RATE}
               onChange={handleChange}
-              tooltip="Hourly rate for labor costs including overhead"
+              tooltip={t.tooltips.laborRate}
               unit="€/hr"
             />
             <InputField
-              label="Printer Cost"
+              label={t.advanced.printerCost}
               name="PRINTER_COST"
               icon={Settings}
               value={settings.PRINTER_COST}
               onChange={handleChange}
-              tooltip="Initial cost of the 3D printer"
+              tooltip={t.tooltips.printerCost}
               unit="€"
             />
             <InputField
-              label="Additional Upfront Cost"
+              label={t.advanced.additionalCost}
               name="ADDITIONAL_COST"
               icon={Settings}
               value={settings.ADDITIONAL_COST}
               onChange={handleChange}
-              tooltip="Additional equipment costs (tools, accessories, etc.)"
+              tooltip={t.tooltips.additionalCost}
               unit="€"
             />
             <InputField
-              label="Annual Maintenance"
+              label={t.advanced.maintenance}
               name="MAINTENANCE_COST"
               icon={Settings}
               value={settings.MAINTENANCE_COST}
               onChange={handleChange}
-              tooltip="Yearly maintenance and replacement parts cost"
+              tooltip={t.tooltips.maintenance}
               unit="€"
             />
             <InputField
-              label="Estimated Life"
+              label={t.advanced.printerLife}
               name="PRINTER_LIFE"
               icon={Settings}
               value={settings.PRINTER_LIFE}
               onChange={handleChange}
-              tooltip="Expected operational lifetime of the printer"
-              unit="years"
+              tooltip={t.tooltips.printerLife}
+              unit={t.units.years}
             />
             <InputField
-              label="Uptime Percentage"
+              label={t.advanced.uptime}
               name="UPTIME_PERCENTAGE"
               icon={Settings}
               value={settings.UPTIME_PERCENTAGE}
               onChange={handleChange}
-              tooltip="Percentage of time the printer is actively printing"
+              tooltip={t.tooltips.uptime}
               unit="%"
             />
             <InputField
-              label="Power Consumption"
+              label={t.advanced.powerConsumption}
               name="POWER_CONSUMPTION"
               icon={Settings}
               value={settings.POWER_CONSUMPTION}
               onChange={handleChange}
-              tooltip="Average power consumption of the printer in watts"
+              tooltip={t.tooltips.powerConsumption}
               unit="W"
             />
             <InputField
-              label="Electricity Cost"
+              label={t.advanced.electricityCost}
               name="ELECTRICITY_COST"
               icon={Settings}
               value={settings.ELECTRICITY_COST}
               onChange={handleChange}
-              tooltip="Local electricity rate per kilowatt-hour"
+              tooltip={t.tooltips.electricityCost}
               unit="€/kWh"
             />
             <InputField
-              label="Buffer Factor"
+              label={t.advanced.bufferFactor}
               name="BUFFER_FACTOR"
               icon={Settings}
               value={settings.BUFFER_FACTOR}
               onChange={handleChange}
-              tooltip="Safety margin for unexpected costs (1.3 = 30% buffer)"
+              tooltip={t.tooltips.bufferFactor}
               unit="x"
             />
           </div>
           
           <div className="mt-8">
-            <h3 className="text-lg font-semibold text-gray-800 dark:text-dark-text mb-4">Calculated Metrics</h3>
+            <h3 className="text-lg font-semibold text-gray-800 dark:text-dark-text mb-4">
+              {t.advanced.calculatedMetrics}
+            </h3>
             <AdvancedSettingsDisplay calculatedSettings={calculatedSettings} />
           </div>
         </div>
