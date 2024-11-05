@@ -6,47 +6,47 @@ import { dirname } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const DIST_DIR = resolve(__dirname, '../dist');
-const LANGUAGES = ['en', 'es', 'de', 'fr', 'it'];
-const BASE_URL = 'https://3dprintingcostcalculator.com';
-
 const translations = {
   en: {
     meta: {
-      title: "3D Printing Cost Calculator - Profit Margin & Pricing Tool",
+      title: "3D Printing Cost Calculator",
       description: "Calculate 3D printing costs with precision. Estimate material, labor, and machine expenses to optimize your pricing strategy.",
       keywords: "3D printing, cost calculator, pricing tool, manufacturing costs, material costs, labor costs, machine costs, profit margins, 3D printer, filament calculator"
     }
   },
   es: {
     meta: {
-      title: "Calculadora de Costos de Impresión 3D - Herramienta de Márgenes y Precios",
+      title: "Calculadora de Costos de Impresión 3D",
       description: "Calcule los costos de impresión 3D con precisión. Estime materiales, mano de obra y gastos de máquina para optimizar su estrategia de precios.",
       keywords: "impresión 3D, calculadora de costos, herramienta de precios, costos de fabricación, costos de materiales, costos de mano de obra, costos de máquina, márgenes de beneficio, impresora 3D, calculadora de filamento"
     }
   },
   de: {
     meta: {
-      title: "3D-Druck Kostenrechner - Gewinnspanne & Preiskalkulation",
+      title: "3D-Druck Kostenrechner",
       description: "Berechnen Sie 3D-Druckkosten mit höchster Präzision. Schätzen Sie Material-, Arbeits- und Maschinenkosten für eine optimale Preisstrategie.",
       keywords: "3D-Druck, Kostenrechner, Preiswerkzeug, Herstellungskosten, Materialkosten, Arbeitskosten, Maschinenkosten, Gewinnmargen, 3D-Drucker, Filamentrechner"
     }
   },
   fr: {
     meta: {
-      title: "Calculateur de Coûts d'Impression 3D - Outil de Marge et Tarification",
+      title: "Calculateur de Coûts d'Impression 3D",
       description: "Calculez les coûts d'impression 3D avec précision. Optimisez votre stratégie de prix en analysant les coûts de matériaux, main-d'œuvre et exploitation.",
       keywords: "impression 3D, calculateur de coûts, outil de tarification, coûts de fabrication, coûts des matériaux, coûts de main-d'œuvre, coûts machine, marges bénéficiaires, imprimante 3D, calculateur de filament"
     }
   },
   it: {
     meta: {
-      title: "Calcolatore Costi Stampa 3D - Strumento per Margini e Prezzi",
+      title: "Calcolatore Costi Stampa 3D",
       description: "Calcola i costi di stampa 3D con precisione. Ottimizza la tua strategia di prezzo analizzando materiali, manodopera e costi operativi.",
       keywords: "stampa 3D, calcolatore costi, strumento prezzi, costi produzione, costi materiali, costi manodopera, costi macchina, margini profitto, stampante 3D, calcolatore filamento"
     }
   }
 };
+
+const DIST_DIR = resolve(__dirname, '../dist');
+const LANGUAGES = ['en', 'es', 'de', 'fr', 'it'];
+const BASE_URL = 'https://3dprintingcostcalculator.com';
 
 const META_TAGS = {
   title: /<title>(.*?)<\/title>/,
@@ -81,25 +81,27 @@ async function generateLanguageFiles() {
   try {
     // Read the base HTML template
     const templatePath = join(DIST_DIR, 'index.html');
-    let templateHtml = await readFile(templatePath, 'utf-8');
+    const templateHtml = await readFile(templatePath, 'utf-8');
 
+    // Generate root (English) HTML
     let rootHtml = templateHtml;
-    rootHtml = addVisuallyHiddenH1(rootHtml, enTranslation);
-    const enTranslation = translations.en;
     rootHtml = rootHtml
       .replace(META_TAGS.htmlLang, `<html lang="en"`)
-      .replace(META_TAGS.title, `<title>${enTranslation.meta.title}</title>`)
-      .replace(META_TAGS.description, `<meta name="description" content="${enTranslation.meta.description}"`)
-      .replace(META_TAGS.keywords, `<meta name="keywords" content="${enTranslation.meta.keywords}"`)
-      .replace(META_TAGS.ogTitle, `<meta property="og:title" content="${enTranslation.meta.title}"`)
-      .replace(META_TAGS.ogDescription, `<meta property="og:description" content="${enTranslation.meta.description}"`)
+      .replace(META_TAGS.title, `<title>${translations.en.meta.title}</title>`)
+      .replace(META_TAGS.description, `<meta name="description" content="${translations.en.meta.description}"`)
+      .replace(META_TAGS.keywords, `<meta name="keywords" content="${translations.en.meta.keywords}"`)
+      .replace(META_TAGS.ogTitle, `<meta property="og:title" content="${translations.en.meta.title}"`)
+      .replace(META_TAGS.ogDescription, `<meta property="og:description" content="${translations.en.meta.description}"`)
       .replace(META_TAGS.ogUrl, `<meta property="og:url" content="${BASE_URL}"`)
-      .replace(META_TAGS.twitterTitle, `<meta name="twitter:title" content="${enTranslation.meta.title}"`)
-      .replace(META_TAGS.twitterDescription, `<meta name="twitter:description" content="${enTranslation.meta.description}"`)
+      .replace(META_TAGS.twitterTitle, `<meta name="twitter:title" content="${translations.en.meta.title}"`)
+      .replace(META_TAGS.twitterDescription, `<meta name="twitter:description" content="${translations.en.meta.description}"`)
       .replace(META_TAGS.canonical, `<link rel="canonical" href="${BASE_URL}"`);
 
     // Add language alternates to root
     rootHtml = rootHtml.replace('</head>', `${generateAlternateLinks()}\n</head>`);
+
+    // Add visually hidden h1 for SEO
+    rootHtml = addVisuallyHiddenH1(rootHtml, translations.en);
 
     // Save root index.html
     await writeFile(join(DIST_DIR, 'index.html'), rootHtml, 'utf-8');
@@ -128,6 +130,9 @@ async function generateLanguageFiles() {
 
       // Add language alternates
       langHtml = langHtml.replace('</head>', `${generateAlternateLinks()}\n</head>`);
+
+      // Add visually hidden h1 for SEO
+      langHtml = addVisuallyHiddenH1(langHtml, t);
 
       // Create language directory and save file
       const langDir = join(DIST_DIR, lang);
