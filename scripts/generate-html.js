@@ -73,8 +73,8 @@ function generateAlternateLinks() {
 }
 
 function addVisuallyHiddenH1(html, translation) {
-  // Replace root div with h1 + root div to maintain proper document structure
-  return html.replace('<div id="root"></div>', `<h1 class="sr-only">${translation.meta.title}</h1>\n    <div id="root"></div>`);
+  // Add a single h1 before the root div
+  return html.replace('<div id="root"></div>', `<h1 class="sr-only">${translation.meta.title}</h1>\n<div id="root"></div>`);
 }
 
 async function generateLanguageFiles() {
@@ -102,6 +102,12 @@ async function generateLanguageFiles() {
 
     // Add visually hidden h1 for SEO
     rootHtml = addVisuallyHiddenH1(rootHtml, translations.en);
+
+    // Remove any duplicate h1 elements
+    rootHtml = rootHtml.replace(/<h1 class="sr-only">.*?<\/h1>\s*<h1 class="sr-only">.*?<\/h1>/, (match) => {
+      const firstH1 = match.match(/<h1.*?<\/h1>/)[0];
+      return `<h1 class="sr-only">${translations.en.meta.title}</h1>`;
+    });
 
     // Save root index.html
     await writeFile(join(DIST_DIR, 'index.html'), rootHtml, 'utf-8');
@@ -133,6 +139,12 @@ async function generateLanguageFiles() {
 
       // Add visually hidden h1 for SEO
       langHtml = addVisuallyHiddenH1(langHtml, t);
+
+      // Remove any duplicate h1 elements
+      langHtml = langHtml.replace(/<h1 class="sr-only">.*?<\/h1>\s*<h1 class="sr-only">.*?<\/h1>/, (match) => {
+        const firstH1 = match.match(/<h1.*?<\/h1>/)[0];
+        return `<h1 class="sr-only">${t.meta.title}</h1>`;
+      });
 
       // Create language directory and save file
       const langDir = join(DIST_DIR, lang);
