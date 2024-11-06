@@ -25,7 +25,11 @@ export function LanguageSwitcher() {
   return (
     <div className="flex items-center gap-2">
       <Globe className="w-4 h-4 text-gray-600 dark:text-gray-400" />
+      <label htmlFor="language-select" className="sr-only">
+        Select Language
+      </label>
       <select
+        id="language-select"
         value={language}
         onChange={(e) => switchLanguage(e.target.value as Language)}
         className="bg-transparent text-gray-600 dark:text-gray-400 border-none focus:ring-0 cursor-pointer text-sm"
