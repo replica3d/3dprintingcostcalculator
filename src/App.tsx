@@ -29,8 +29,8 @@ function App() {
 
   const [settings, setSettings] = useState(DEFAULT_SETTINGS);
 
-  const baseUrl = 'https://3dprintingcostcalculator.com';
-  const canonicalUrl = language === 'en' ? baseUrl : `${baseUrl}/${language}`;
+  const baseUrl = 'https://3dprintingcostcalculator.com/';
+  const canonicalUrl = language === 'en' ? baseUrl : `${baseUrl}${language}/`;
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);

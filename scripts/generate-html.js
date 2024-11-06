@@ -46,7 +46,7 @@ const translations = {
 
 const DIST_DIR = resolve(__dirname, '../dist');
 const LANGUAGES = ['en', 'es', 'de', 'fr', 'it'];
-const BASE_URL = 'https://3dprintingcostcalculator.com';
+const BASE_URL = 'https://3dprintingcostcalculator.com/';
 
 const META_TAGS = {
   title: /<title>(.*?)<\/title>/,
@@ -64,10 +64,10 @@ const META_TAGS = {
 function generateAlternateLinks() {
   return `
     <link rel="alternate" hrefLang="en" href="${BASE_URL}" />
-    <link rel="alternate" hrefLang="es" href="${BASE_URL}/es" />
-    <link rel="alternate" hrefLang="de" href="${BASE_URL}/de" />
-    <link rel="alternate" hrefLang="fr" href="${BASE_URL}/fr" />
-    <link rel="alternate" hrefLang="it" href="${BASE_URL}/it" />
+    <link rel="alternate" hrefLang="es" href="${BASE_URL}es/" />
+    <link rel="alternate" hrefLang="de" href="${BASE_URL}de/" />
+    <link rel="alternate" hrefLang="fr" href="${BASE_URL}fr/" />
+    <link rel="alternate" hrefLang="it" href="${BASE_URL}it/" />
     <link rel="alternate" hrefLang="x-default" href="${BASE_URL}" />
   `;
 }
@@ -119,7 +119,7 @@ async function generateLanguageFiles() {
 
       const t = translations[lang];
       let langHtml = templateHtml;
-      const canonicalUrl = `${BASE_URL}/${lang}`;
+      const canonicalUrl = `${BASE_URL}${lang}/`;
 
       // Update meta tags
       langHtml = langHtml
