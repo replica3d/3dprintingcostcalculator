@@ -7,4 +7,5 @@ export interface CalculatorInputs {
   laborRequired: string | number;
   hardwareCost: string | number;
   packagingCost: string | number;
+  vatRate: string | number;
 }

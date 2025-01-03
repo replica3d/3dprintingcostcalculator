@@ -20,6 +20,8 @@ export const DEFAULT_SETTINGS = {
   ADDITIONAL_COST: 0.00
 };
 
+export const DEFAULT_VAT_RATE = 23;
+
 export const MATERIALS = ['PLA', 'PETG', 'ASA', 'TPU', 'PC', 'PA'];
 
 export const MATERIAL_PRICES = {

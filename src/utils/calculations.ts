@@ -35,6 +35,7 @@ export function calculateCosts(inputs: {
   laborRequired: number;
   hardwareCost: number;
   packagingCost: number;
+  vatRate: number;
 }, settings: PrinterSettings) {
   const { printerCostPerHour } = calculateAdvancedMetrics(settings);
   
@@ -46,10 +47,11 @@ export function calculateCosts(inputs: {
   
   const landedCost = totalMaterialCost + inputs.packagingCost + laborCost + machineCost;
   
-  // Calculate retail prices based on desired profit margins
-  const margin50 = landedCost / (1 - 0.50); // 50% profit margin
-  const margin60 = landedCost / (1 - 0.60); // 60% profit margin
-  const margin70 = landedCost / (1 - 0.70); // 70% profit margin
+  const margin50 = landedCost / (1 - 0.50);
+  const margin60 = landedCost / (1 - 0.60);
+  const margin70 = landedCost / (1 - 0.70);
+
+  const calculateWithVAT = (price: number) => price * (1 + (inputs.vatRate / 100));
   
   return {
     materialCost: totalMaterialCost,
@@ -58,6 +60,10 @@ export function calculateCosts(inputs: {
     landedCost,
     margin50,
     margin60,
-    margin70
+    margin70,
+    margin50VAT: calculateWithVAT(margin50),
+    margin60VAT: calculateWithVAT(margin60),
+    margin70VAT: calculateWithVAT(margin70),
+    vatRate: inputs.vatRate
   };
 }

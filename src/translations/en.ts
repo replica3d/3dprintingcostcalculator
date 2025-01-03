@@ -18,7 +18,8 @@ export const en = {
     printingTime: "Printing Time",
     laborTime: "Labor Time",
     hardwareCost: "Hardware Cost",
-    packagingCost: "Packaging Cost"
+    packagingCost: "Packaging Cost",
+    vatRate: "VAT Rate"
   },
   costs: {
     materialCost: "Material Cost",
@@ -63,6 +64,7 @@ export const en = {
     laborTime: "Time required for setup, monitoring, and post-processing",
     hardwareCost: "Cost of additional hardware (screws, inserts, etc.)",
     packagingCost: "Cost of packaging materials",
+    vatRate: "Value Added Tax rate to be applied to the final price",
     materialEfficiency: "Accounts for material waste and failed prints (1.1 = 10% waste)",
     laborRate: "Hourly rate for labor costs including overhead",
     printerCost: "Initial cost of the 3D printer",

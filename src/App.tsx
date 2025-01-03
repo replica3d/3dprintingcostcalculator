@@ -10,7 +10,7 @@ import { CurrencySwitcher } from './components/CurrencySwitcher';
 import { AdvancedSettings } from './components/AdvancedSettings';
 import { HowToUseGuide } from './components/HowToUseGuide';
 import { FAQ } from './components/FAQ';
-import { DEFAULT_SETTINGS, MATERIALS, MATERIAL_PRICES } from './constants';
+import { DEFAULT_SETTINGS, MATERIALS, MATERIAL_PRICES, DEFAULT_VAT_RATE } from './constants';
 import { calculateCosts } from './utils/calculations';
 import { useLanguage } from './context/LanguageContext';
 import { useCurrency } from './context/CurrencyContext';
@@ -27,7 +27,8 @@ function App() {
     printingTime: '',
     laborRequired: '',
     hardwareCost: '',
-    packagingCost: ''
+    packagingCost: '',
+    vatRate: DEFAULT_VAT_RATE
   });
 
   const [settings, setSettings] = useState(DEFAULT_SETTINGS);
@@ -90,7 +91,8 @@ function App() {
     printingTime: Number(inputs.printingTime) || 0,
     laborRequired: Number(inputs.laborRequired) || 0,
     hardwareCost: Number(inputs.hardwareCost) || 0,
-    packagingCost: Number(inputs.packagingCost) || 0
+    packagingCost: Number(inputs.packagingCost) || 0,
+    vatRate: Number(inputs.vatRate) || 0
   }, settings);
 
   const shareData = {
@@ -113,7 +115,6 @@ function App() {
         <meta name="twitter:title" content={t.meta.title} />
         <meta name="twitter:description" content={t.meta.description} />
         
-        {/* Language alternates */}
         <link rel="alternate" hrefLang="en" href={`${baseUrl}`} />
         <link rel="alternate" hrefLang="es" href={`${baseUrl}/es`} />
         <link rel="alternate" hrefLang="de" href={`${baseUrl}/de`} />
@@ -222,6 +223,15 @@ function App() {
                 tooltip={t.tooltips.packagingCost}
                 unit={currency}
               />
+              <InputField
+                label={t.inputs.vatRate}
+                name="vatRate"
+                icon={Calculator}
+                value={inputs.vatRate}
+                onChange={handleInputChange}
+                tooltip={t.tooltips.vatRate}
+                unit="%"
+              />
             </div>
           </div>
 
@@ -269,17 +279,20 @@ function App() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <CostDisplay 
                 label={t.costs.margin50}
-                value={costs.margin50} 
+                value={costs.margin50}
+                vatValue={costs.margin50VAT}
                 className="bg-green-100 dark:bg-[#2D3D2D] border border-green-300 dark:border-green-900"
               />
               <CostDisplay 
                 label={t.costs.margin60}
-                value={costs.margin60} 
+                value={costs.margin60}
+                vatValue={costs.margin60VAT}
                 className="bg-blue-100 dark:bg-[#2D2D3D] border border-blue-300 dark:border-blue-900"
               />
               <CostDisplay 
                 label={t.costs.margin70}
-                value={costs.margin70} 
+                value={costs.margin70}
+                vatValue={costs.margin70VAT}
                 className="bg-purple-100 dark:bg-[#3D2D3D] border border-purple-300 dark:border-purple-900"
               />
             </div>
