@@ -39,5 +39,18 @@
   <body class="antialiased">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script type="text/javascript">
+      (
+        function() {
+          var sbSiteSecret = '05072403-2e6b-4336-95d0-4b9698740182';
+          window.sitebehaviourTrackingSecret = sbSiteSecret;
+          var scriptElement = document.createElement('script');
+          scriptElement.async = true;
+          scriptElement.id = 'site-behaviour-script-v2';
+          scriptElement.src = 'https://sitebehaviour-cdn.fra1.cdn.digitaloceanspaces.com/index.min.js?sitebehaviour-secret=' + sbSiteSecret;
+          document.head.appendChild(scriptElement); 
+        }
+      )()
+    </script>
   </body>
 </html>
