@@ -18,7 +18,8 @@ export const it = {
     printingTime: "Tempo di Stampa",
     laborTime: "Tempo di Lavorazione",
     hardwareCost: "Costi Aggiuntivi",
-    packagingCost: "Costo Imballaggio"
+    packagingCost: "Costo Imballaggio",
+    vatRate: "Aliquota IVA"
   },
   costs: {
     materialCost: "Costo Materiale",

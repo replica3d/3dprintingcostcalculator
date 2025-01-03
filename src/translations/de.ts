@@ -18,7 +18,8 @@ export const de = {
     printingTime: "Druckzeit",
     laborTime: "Arbeitszeit",
     hardwareCost: "Hardwarekosten",
-    packagingCost: "Verpackungskosten"
+    packagingCost: "Verpackungskosten",
+    vatRate: "Mehrwertsteuersatz"
   },
   costs: {
     materialCost: "Materialkosten",
@@ -63,6 +64,7 @@ export const de = {
     laborTime: "Zeit für Einrichtung, Überwachung und Nachbearbeitung",
     hardwareCost: "Kosten für zusätzliche Hardware (Schrauben, Einsätze, etc.)",
     packagingCost: "Kosten für Verpackungsmaterial",
+    vatRate: "Mehrwertsteuersatz, der auf den Endpreis angewendet wird",
     materialEfficiency: "Berücksichtigt Materialverschwendung und fehlgeschlagene Drucke (1.1 = 10% Verschwendung)",
     laborRate: "Stundensatz für Arbeitskosten einschließlich Gemeinkosten",
     printerCost: "Anfängliche Kosten des 3D-Druckers",
