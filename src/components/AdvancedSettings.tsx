@@ -4,6 +4,7 @@ import { InputField } from './InputField';
 import { AdvancedSettingsDisplay } from './AdvancedSettingsDisplay';
 import { calculateAdvancedMetrics } from '../utils/calculations';
 import { useLanguage } from '../context/LanguageContext';
+import { useCurrency } from '../context/CurrencyContext';
 import type { PrinterSettings } from '../constants';
 
 interface AdvancedSettingsProps {
@@ -14,6 +15,7 @@ interface AdvancedSettingsProps {
 export function AdvancedSettings({ settings, onSettingChange }: AdvancedSettingsProps) {
   const [isOpen, setIsOpen] = React.useState(false);
   const { t } = useLanguage();
+  const { currency } = useCurrency();
   const calculatedSettings = calculateAdvancedMetrics(settings);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,16 +52,16 @@ export function AdvancedSettings({ settings, onSettingChange }: AdvancedSettings
               value={settings.LABOR_RATE}
               onChange={handleChange}
               tooltip={t.tooltips.laborRate}
-              unit="€/hr"
+              unit={`${currency}/hr`}
             />
             <InputField
               label={t.advanced.printerCost}
               name="PRINTER_COST"
               icon={Settings}
-              value={settings.PRINTER_COST}
+              value={settings.PRINTER_COST[currency]}
               onChange={handleChange}
               tooltip={t.tooltips.printerCost}
-              unit="€"
+              unit={currency}
             />
             <InputField
               label={t.advanced.additionalCost}
@@ -68,16 +70,16 @@ export function AdvancedSettings({ settings, onSettingChange }: AdvancedSettings
               value={settings.ADDITIONAL_COST}
               onChange={handleChange}
               tooltip={t.tooltips.additionalCost}
-              unit="€"
+              unit={currency}
             />
             <InputField
               label={t.advanced.maintenance}
               name="MAINTENANCE_COST"
               icon={Settings}
-              value={settings.MAINTENANCE_COST}
+              value={settings.MAINTENANCE_COST[currency]}
               onChange={handleChange}
               tooltip={t.tooltips.maintenance}
-              unit="€"
+              unit={currency}
             />
             <InputField
               label={t.advanced.printerLife}
@@ -113,7 +115,7 @@ export function AdvancedSettings({ settings, onSettingChange }: AdvancedSettings
               value={settings.ELECTRICITY_COST}
               onChange={handleChange}
               tooltip={t.tooltips.electricityCost}
-              unit="€/kWh"
+              unit={`${currency}/kWh`}
             />
             <InputField
               label={t.advanced.bufferFactor}

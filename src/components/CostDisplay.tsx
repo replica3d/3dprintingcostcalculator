@@ -1,6 +1,7 @@
 import React from 'react';
 import { HelpCircle } from 'lucide-react';
 import { Tooltip } from './Tooltip';
+import { useCurrency } from '../context/CurrencyContext';
 
 interface CostDisplayProps {
   label: string;
@@ -11,6 +12,7 @@ interface CostDisplayProps {
 }
 
 export function CostDisplay({ label, value, className = '', isHours = false, tooltip }: CostDisplayProps) {
+  const { currency } = useCurrency();
   const defaultClass = 'bg-white dark:bg-[#2D2D2D] border border-gray-200 dark:border-[#696969]';
   const finalClassName = className.includes('border') ? className.replace(/border-gray-\d+/g, 'dark:border-[#696969]') : `${defaultClass} ${className}`;
 
@@ -27,7 +29,7 @@ export function CostDisplay({ label, value, className = '', isHours = false, too
       <div className="text-xl font-semibold text-[#121212] dark:text-dark-text">
         {isHours ? 
           Math.round(value) : 
-          `${value.toFixed(2)}€`
+          `${value.toFixed(2)} ${currency}`
         }
       </div>
     </div>

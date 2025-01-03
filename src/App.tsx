@@ -6,20 +6,23 @@ import { CostDisplay } from './components/CostDisplay';
 import { ShareButton } from './components/ShareButton';
 import { ThemeToggle } from './components/ThemeToggle';
 import { LanguageSwitcher } from './components/LanguageSwitcher';
+import { CurrencySwitcher } from './components/CurrencySwitcher';
 import { AdvancedSettings } from './components/AdvancedSettings';
 import { HowToUseGuide } from './components/HowToUseGuide';
 import { FAQ } from './components/FAQ';
 import { DEFAULT_SETTINGS, MATERIALS, MATERIAL_PRICES } from './constants';
 import { calculateCosts } from './utils/calculations';
 import { useLanguage } from './context/LanguageContext';
+import { useCurrency } from './context/CurrencyContext';
 import type { CalculatorInputs, CostBreakdown } from './types';
 
 function App() {
   const { t, language } = useLanguage();
+  const { currency } = useCurrency();
   const [inputs, setInputs] = useState<CalculatorInputs>({
     partName: '',
     material: MATERIALS[0],
-    filamentCost: MATERIAL_PRICES[MATERIALS[0] as keyof typeof MATERIAL_PRICES],
+    filamentCost: MATERIAL_PRICES[currency][MATERIALS[0] as keyof typeof MATERIAL_PRICES[typeof currency]],
     filamentWeight: '',
     printingTime: '',
     laborRequired: '',
@@ -49,11 +52,18 @@ function App() {
     }
   }, []);
 
+  useEffect(() => {
+    setInputs(prev => ({
+      ...prev,
+      filamentCost: MATERIAL_PRICES[currency][prev.material as keyof typeof MATERIAL_PRICES[typeof currency]]
+    }));
+  }, [currency]);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     
     if (name === 'material') {
-      const materialPrice = MATERIAL_PRICES[value as keyof typeof MATERIAL_PRICES];
+      const materialPrice = MATERIAL_PRICES[currency][value as keyof typeof MATERIAL_PRICES[typeof currency]];
       setInputs(prev => ({
         ...prev,
         material: value,
@@ -127,8 +137,9 @@ function App() {
             <p className="text-[#121212] dark:text-gray-400 mt-2 mb-4">
               {t.calculator.subtitle}
             </p>
-            <div className="flex justify-center">
+            <div className="flex justify-center gap-4">
               <LanguageSwitcher />
+              <CurrencySwitcher />
             </div>
           </div>
 
@@ -164,7 +175,7 @@ function App() {
                 value={inputs.filamentCost}
                 onChange={handleInputChange}
                 tooltip={t.tooltips.filamentCost}
-                unit="€/kg"
+                unit={currency}
               />
               <InputField
                 label={t.inputs.filamentWeight}
@@ -200,7 +211,7 @@ function App() {
                 value={inputs.hardwareCost}
                 onChange={handleInputChange}
                 tooltip={t.tooltips.hardwareCost}
-                unit="€"
+                unit={currency}
               />
               <InputField
                 label={t.inputs.packagingCost}
@@ -209,7 +220,7 @@ function App() {
                 value={inputs.packagingCost}
                 onChange={handleInputChange}
                 tooltip={t.tooltips.packagingCost}
-                unit="€"
+                unit={currency}
               />
             </div>
           </div>

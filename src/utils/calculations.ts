@@ -1,12 +1,14 @@
 import type { PrinterSettings } from '../constants';
+import { useCurrency } from '../context/CurrencyContext';
 
 export function calculateAdvancedMetrics(settings: PrinterSettings) {
-  const totalInvestment = settings.PRINTER_COST + settings.ADDITIONAL_COST;
-  const lifetimeCost = totalInvestment + (settings.MAINTENANCE_COST * settings.PRINTER_LIFE);
+  const { currency } = useCurrency();
+  const totalInvestment = settings.PRINTER_COST[currency] + settings.ADDITIONAL_COST;
+  const lifetimeCost = totalInvestment + (settings.MAINTENANCE_COST[currency] * settings.PRINTER_LIFE);
   const estimatedUptimeHours = 8760 * (settings.UPTIME_PERCENTAGE / 100);
   
-  const printerDepreciation = settings.PRINTER_COST / (settings.PRINTER_LIFE * estimatedUptimeHours);
-  const annualMaintenanceCost = settings.MAINTENANCE_COST / estimatedUptimeHours;
+  const printerDepreciation = settings.PRINTER_COST[currency] / (settings.PRINTER_LIFE * estimatedUptimeHours);
+  const annualMaintenanceCost = settings.MAINTENANCE_COST[currency] / estimatedUptimeHours;
   const electricityCostPerHour = (settings.POWER_CONSUMPTION / 1000) * settings.ELECTRICITY_COST;
   
   const printerCostPerHour = (

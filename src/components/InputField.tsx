@@ -1,6 +1,7 @@
 import React from 'react';
 import { LucideIcon, HelpCircle } from 'lucide-react';
 import { Tooltip } from './Tooltip';
+import { useCurrency } from '../context/CurrencyContext';
 
 interface InputFieldProps {
   label: string;
@@ -29,6 +30,7 @@ export function InputField({
   unit,
   onChange
 }: InputFieldProps) {
+  const { currency } = useCurrency();
   const inputId = `input-${name}`;
   
   return (
@@ -76,7 +78,7 @@ export function InputField({
             />
             {unit && (
               <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[#121212] dark:text-dark-text text-base">
-                {unit}
+                {unit === '€' ? currency : unit}
               </span>
             )}
           </div>

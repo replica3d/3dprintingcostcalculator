@@ -4,6 +4,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import App from './App.tsx';
 import { ThemeProvider } from './context/ThemeContext';
 import { LanguageProvider } from './context/LanguageContext';
+import { CurrencyProvider } from './context/CurrencyContext';
 import { getTranslation } from './translations';
 import './index.css';
 
@@ -13,9 +14,11 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <HelmetProvider>
       <LanguageProvider lang={lang}>
-        <ThemeProvider>
-          <App />
-        </ThemeProvider>
+        <CurrencyProvider>
+          <ThemeProvider>
+            <App />
+          </ThemeProvider>
+        </CurrencyProvider>
       </LanguageProvider>
     </HelmetProvider>
   </StrictMode>

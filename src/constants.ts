@@ -4,8 +4,16 @@ export const DEFAULT_SETTINGS = {
   PRINT_TIME_RATE: 0.16,
   ELECTRICITY_COST: 0.20,
   BUFFER_FACTOR: 1.3,
-  PRINTER_COST: 1000.00,
-  MAINTENANCE_COST: 75.00,
+  PRINTER_COST: {
+    EUR: 1000,
+    USD: 1000,
+    PLN: 4000
+  },
+  MAINTENANCE_COST: {
+    EUR: 75,
+    USD: 75,
+    PLN: 300
+  },
   PRINTER_LIFE: 3,
   UPTIME_PERCENTAGE: 50,
   POWER_CONSUMPTION: 150,
@@ -15,12 +23,30 @@ export const DEFAULT_SETTINGS = {
 export const MATERIALS = ['PLA', 'PETG', 'ASA', 'TPU', 'PC', 'PA'];
 
 export const MATERIAL_PRICES = {
-  PLA: 19.99,
-  PETG: 19.99,
-  ASA: 29.99,
-  TPU: 39.99,
-  PC: 39.99,
-  PA: 44.99
+  EUR: {
+    PLA: 19.99,
+    PETG: 19.99,
+    ASA: 29.99,
+    TPU: 39.99,
+    PC: 39.99,
+    PA: 44.99
+  },
+  USD: {
+    PLA: 21.99,
+    PETG: 21.99,
+    ASA: 29.99,
+    TPU: 39.99,
+    PC: 44.99,
+    PA: 49.99
+  },
+  PLN: {
+    PLA: 89.99,
+    PETG: 89.99,
+    ASA: 134.99,
+    TPU: 179.99,
+    PC: 179.99,
+    PA: 199.99
+  }
 };
 
 export interface PrinterSettings {
@@ -29,8 +55,8 @@ export interface PrinterSettings {
   PRINT_TIME_RATE: number;
   ELECTRICITY_COST: number;
   BUFFER_FACTOR: number;
-  PRINTER_COST: number;
-  MAINTENANCE_COST: number;
+  PRINTER_COST: Record<string, number>;
+  MAINTENANCE_COST: Record<string, number>;
   PRINTER_LIFE: number;
   UPTIME_PERCENTAGE: number;
   POWER_CONSUMPTION: number;
