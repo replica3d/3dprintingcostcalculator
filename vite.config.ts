@@ -24,9 +24,30 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     rollupOptions: {
-      input: 'index.html'
+      input: 'index.html',
+      output: {
+        manualChunks: undefined
+      }
     },
-    sourcemap: true
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true,
+        pure_funcs: ['console.log', 'console.info', 'console.debug', 'console.trace'],
+        passes: 2
+      },
+      mangle: {
+        toplevel: true,
+        safari10: true
+      },
+      format: {
+        comments: false
+      },
+      ecma: 2020,
+      module: true
+    },
+    sourcemap: false
   },
   resolve: {
     alias: {
