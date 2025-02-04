@@ -44,7 +44,17 @@ const translations = {
   }
 };
 
-const DIST_DIR = resolve(__dirname, '../dist');
+const PROJECT_ROOT = resolve(__dirname, '..');
+const DIST_DIR = resolve(PROJECT_ROOT, 'dist');
+
+// Ensure dist directory exists
+try {
+  await mkdir(DIST_DIR, { recursive: true });
+} catch (error) {
+  if (error.code !== 'EEXIST') {
+    throw error;
+  }
+}
 const LANGUAGES = ['en', 'es', 'de', 'fr', 'it'];
 const BASE_URL = 'https://3dprintingcostcalculator.com/';
 
