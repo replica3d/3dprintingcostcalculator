@@ -10,13 +10,21 @@ export default defineConfig({
     react(),
     {
       name: 'generate-language-files',
-      async closeBundle() {
-        try {
-          await execAsync('node scripts/generate-html.js');
-          console.log('✓ Generated language-specific HTML files');
-        } catch (error) {
-          console.error('Error generating language files:', error);
-          throw error;
+      closeBundle: {
+        sequential: true,
+        async handler() {
+          try {
+            // First, run the copy script
+            await execAsync('node scripts/copy-localized.js');
+            console.log('✓ Copied localized files');
+            
+            // Then generate the HTML files
+            await execAsync('node scripts/generate-html.js');
+            console.log('✓ Generated language-specific HTML files');
+          } catch (error) {
+            console.error('Error in build process:', error);
+            throw error;
+          }
         }
       }
     }
