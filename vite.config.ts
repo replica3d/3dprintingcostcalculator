@@ -26,7 +26,17 @@ export default defineConfig({
     rollupOptions: {
       input: 'index.html'
     },
-    sourcemap: true
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true
+      },
+      format: {
+        comments: false
+      }
+    },
+    sourcemap: false
   },
   resolve: {
     alias: {
