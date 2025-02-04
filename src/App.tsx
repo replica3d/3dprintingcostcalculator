@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Package2, Timer, Wrench, Box, Calculator } from 'lucide-react';
+import { Package2, Timer, Wrench, Box, Calculator, HelpCircle } from 'lucide-react';
 import { InputField } from './components/InputField';
+import { Tooltip } from './components/Tooltip';
 import { CostDisplay } from './components/CostDisplay';
 import { ShareButton } from './components/ShareButton';
 import { ThemeToggle } from './components/ThemeToggle';
@@ -24,7 +25,8 @@ function App() {
     material: MATERIALS[0],
     filamentCost: MATERIAL_PRICES[currency][MATERIALS[0] as keyof typeof MATERIAL_PRICES[typeof currency]],
     filamentWeight: '',
-    printingTime: '',
+    printingTimeHours: '',
+    printingTimeMinutes: '',
     laborRequired: '',
     hardwareCost: '',
     packagingCost: '',
@@ -88,7 +90,7 @@ function App() {
   const costs: CostBreakdown = calculateCosts({
     ...inputs,
     filamentWeight: Number(inputs.filamentWeight) || 0,
-    printingTime: Number(inputs.printingTime) || 0,
+    printingTime: (Number(inputs.printingTimeHours) || 0) + (Number(inputs.printingTimeMinutes) || 0) / 60,
     laborRequired: Number(inputs.laborRequired) || 0,
     hardwareCost: Number(inputs.hardwareCost) || 0,
     packagingCost: Number(inputs.packagingCost) || 0,
@@ -187,15 +189,38 @@ function App() {
                 tooltip={t.tooltips.filamentWeight}
                 unit="g"
               />
-              <InputField
-                label={t.inputs.printingTime}
-                name="printingTime"
-                icon={Timer}
-                value={inputs.printingTime}
-                onChange={handleInputChange}
-                tooltip={t.tooltips.printingTime}
-                unit="hrs"
-              />
+              <div>
+                <label className="block text-base font-medium text-[#121212] dark:text-dark-text mb-1">
+                  <div className="flex items-center gap-2">
+                    <Timer className="w-4 h-4" />
+                    <span>{t.inputs.printingTime}</span>
+                    {t.tooltips.printingTime && (
+                      <Tooltip content={t.tooltips.printingTime}>
+                        <HelpCircle className="w-4 h-4 text-gray-400 dark:text-dark-text hover:text-[#121212] dark:hover:text-dark-text cursor-help" />
+                      </Tooltip>
+                    )}
+                  </div>
+                </label>
+                <div className="flex gap-4">
+                  <InputField
+                    label=""
+                    name="printingTimeHours"
+                    icon={() => null}
+                    value={inputs.printingTimeHours}
+                    onChange={handleInputChange}
+                    unit="hrs"
+                  />
+                  <InputField
+                    label=""
+                    name="printingTimeMinutes"
+                    icon={() => null}
+                    value={inputs.printingTimeMinutes}
+                    onChange={handleInputChange}
+                    unit="min"
+                    step="1"
+                  />
+                </div>
+              </div>
               <InputField
                 label={t.inputs.laborTime}
                 name="laborRequired"

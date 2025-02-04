@@ -3,7 +3,8 @@ export interface CalculatorInputs {
   material: string;
   filamentCost: number;
   filamentWeight: string | number;
-  printingTime: string | number;
+  printingTimeHours: string | number;
+  printingTimeMinutes: string | number;
   laborRequired: string | number;
   hardwareCost: string | number;
   packagingCost: string | number;
