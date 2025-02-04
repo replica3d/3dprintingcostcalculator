@@ -26,20 +26,39 @@ export default defineConfig({
     rollupOptions: {
       input: 'index.html',
       output: {
+        // Obfuscate file names
+        entryFileNames: 'assets/[hash].js',
+        chunkFileNames: 'assets/[hash].js',
+        assetFileNames: 'assets/[hash].[ext]',
+        // Disable code splitting to make reverse engineering harder
         manualChunks: undefined
       }
     },
+    // Enable maximum minification
     minify: 'terser',
     terserOptions: {
       compress: {
         drop_console: true,
         drop_debugger: true,
         pure_funcs: ['console.log', 'console.info', 'console.debug', 'console.trace'],
-        passes: 2
+        passes: 3,
+        dead_code: true,
+        keep_fargs: false,
+        toplevel: true,
+        unsafe: true,
+        unsafe_math: true,
+        unsafe_methods: true,
+        unsafe_proto: true,
+        unsafe_regexp: true,
+        unsafe_undefined: true
       },
       mangle: {
         toplevel: true,
-        safari10: true
+        safari10: true,
+        properties: {
+          regex: /^_/,
+          reserved: ['__VITE_', '__STACKBLITZ_', '__REACT_']
+        }
       },
       format: {
         comments: false
@@ -47,11 +66,19 @@ export default defineConfig({
       ecma: 2020,
       module: true
     },
-    sourcemap: false
+    sourcemap: false,
+    // Additional build options for protection
+    cssMinify: true,
+    assetsInlineLimit: 0,
+    modulePreload: false
   },
   resolve: {
     alias: {
       '@': '/src'
     }
+  },
+  // Disable source maps in development
+  css: {
+    devSourcemap: false
   }
 });
