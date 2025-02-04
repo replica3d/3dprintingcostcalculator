@@ -1,0 +1,29 @@
+{
+  "name": "3D Printing Cost Calculator",
+  "short_name": "3D Print Calc",
+  "description": "Calculate 3D printing costs with precision. Estimate material, labor, and machine expenses.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1E1E1E",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "New Calculation",
+      "url": "/?new=true",
+      "description": "Start a new cost calculation"
+    }
+  ],
+  "categories": ["utilities", "productivity", "business"],
+  "lang": "en",
+  "dir": "ltr",
+  "orientation": "any",
+  "prefer_related_applications": false
+}
