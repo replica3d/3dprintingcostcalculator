@@ -16,11 +16,20 @@ export function AdvancedSettings({ settings, onSettingChange }: AdvancedSettings
   const [isOpen, setIsOpen] = React.useState(false);
   const { t } = useLanguage();
   const { currency } = useCurrency();
-  const calculatedSettings = calculateAdvancedMetrics(settings);
+  const calculatedSettings = calculateAdvancedMetrics(settings, currency);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    onSettingChange(name, parseFloat(value) || 0);
+    const numValue = parseFloat(value) || 0;
+    
+    // Handle currency-specific settings
+    if (name === 'PRINTER_COST') {
+      onSettingChange(`${name}.${currency}`, numValue);
+    } else if (name === 'MAINTENANCE_COST') {
+      onSettingChange(`${name}.${currency}`, numValue);
+    } else {
+      onSettingChange(name, numValue);
+    }
   };
 
   return (

@@ -81,10 +81,24 @@ function App() {
   };
 
   const handleSettingChange = (name: string, value: number) => {
-    setSettings(prev => ({
-      ...prev,
-      [name]: value
-    }));
+    setSettings(prev => {
+      // Handle nested currency settings
+      if (name.includes('.')) {
+        const [parentKey, childKey] = name.split('.');
+        return {
+          ...prev,
+          [parentKey]: {
+            ...prev[parentKey as keyof PrinterSettings],
+            [childKey]: value
+          }
+        };
+      }
+      
+      return {
+        ...prev,
+        [name]: value
+      };
+    });
   };
 
   const costs: CostBreakdown = calculateCosts({
@@ -95,7 +109,7 @@ function App() {
     hardwareCost: Number(inputs.hardwareCost) || 0,
     packagingCost: Number(inputs.packagingCost) || 0,
     vatRate: Number(inputs.vatRate) || 0
-  }, settings);
+  }, settings, currency);
 
   const shareData = {
     inputs,

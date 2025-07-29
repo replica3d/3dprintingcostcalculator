@@ -1,8 +1,6 @@
 import type { PrinterSettings } from '../constants';
-import { useCurrency } from '../context/CurrencyContext';
 
-export function calculateAdvancedMetrics(settings: PrinterSettings) {
-  const { currency } = useCurrency();
+export function calculateAdvancedMetrics(settings: PrinterSettings, currency: string = 'EUR') {
   const totalInvestment = settings.PRINTER_COST[currency] + settings.ADDITIONAL_COST;
   const lifetimeCost = totalInvestment + (settings.MAINTENANCE_COST[currency] * settings.PRINTER_LIFE);
   const estimatedUptimeHours = 8760 * (settings.UPTIME_PERCENTAGE / 100);
@@ -36,8 +34,8 @@ export function calculateCosts(inputs: {
   hardwareCost: number;
   packagingCost: number;
   vatRate: number;
-}, settings: PrinterSettings) {
-  const { printerCostPerHour } = calculateAdvancedMetrics(settings);
+}, settings: PrinterSettings, currency: string = 'EUR') {
+  const { printerCostPerHour } = calculateAdvancedMetrics(settings, currency);
   
   const materialCost = (inputs.filamentWeight / 1000) * inputs.filamentCost * settings.MATERIAL_EFFICIENCY;
   const totalMaterialCost = materialCost + inputs.hardwareCost;
