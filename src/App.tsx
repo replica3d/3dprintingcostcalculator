@@ -140,6 +140,7 @@ function App() {
         <link rel="alternate" hrefLang="de" href={`${baseUrl}/de`} />
         <link rel="alternate" hrefLang="fr" href={`${baseUrl}/fr`} />
         <link rel="alternate" hrefLang="it" href={`${baseUrl}/it`} />
+        <link rel="alternate" hrefLang="pl" href={`${baseUrl}/pl`} />
         <link rel="alternate" hrefLang="x-default" href={`${baseUrl}`} />
       </Helmet>
 

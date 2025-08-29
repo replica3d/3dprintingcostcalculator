@@ -2,5 +2,6 @@
 /de/*          /de/index.html    200
 /fr/*          /fr/index.html    200
 /it/*          /it/index.html    200
+/pl/*          /pl/index.html    200
 /assets/*      /assets/:splat    200
 /*             /index.html       200
