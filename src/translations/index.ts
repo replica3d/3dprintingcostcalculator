@@ -3,13 +3,15 @@ import { es } from './es';
 import { de } from './de';
 import { fr } from './fr';
 import { it } from './it';
+import { pl } from './pl';
 
 export const translations = {
   en,
   es,
   de,
   fr,
-  it
+  it,
+  pl
 } as const;
 
 export type Language = keyof typeof translations;

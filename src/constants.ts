@@ -20,6 +20,16 @@ export const DEFAULT_SETTINGS = {
   ADDITIONAL_COST: 0.00
 };
 
+// Default VAT rates by country/language
+export const DEFAULT_VAT_RATES = {
+  en: 20,
+  es: 21,
+  de: 19,
+  fr: 20,
+  it: 22,
+  pl: 23
+};
+
 export const DEFAULT_VAT_RATE = 23;
 
 export const MATERIALS = ['PLA', 'PETG', 'ASA', 'TPU', 'PC', 'PA'];

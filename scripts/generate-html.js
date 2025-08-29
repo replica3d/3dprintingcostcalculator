@@ -41,6 +41,13 @@ const translations = {
       description: "Calcola i costi di stampa 3D con precisione. Ottimizza la tua strategia di prezzo analizzando materiali, manodopera e costi operativi.",
       keywords: "stampa 3D, calcolatore costi, strumento prezzi, costi produzione, costi materiali, costi manodopera, costi macchina, margini profitto, stampante 3D, calcolatore filamento"
     }
+  },
+  pl: {
+    meta: {
+      title: "Kalkulator Kosztów Druku 3D",
+      description: "Oblicz koszty druku 3D z najwyższą precyzją. Oszacuj koszty materiałów, pracy i maszyn, aby zoptymalizować strategię cenową.",
+      keywords: "druk 3D, kalkulator kosztów, narzędzie cenowe, koszty produkcji, koszty materiałów, koszty pracy, koszty maszyn, marże zysku, drukarka 3D, kalkulator filamentu"
+    }
   }
 };
 
@@ -55,7 +62,7 @@ try {
     throw error;
   }
 }
-const LANGUAGES = ['en', 'es', 'de', 'fr', 'it'];
+const LANGUAGES = ['en', 'es', 'de', 'fr', 'it', 'pl'];
 const BASE_URL = 'https://3dprintingcostcalculator.com/';
 
 const META_TAGS = {
@@ -78,6 +85,7 @@ function generateAlternateLinks() {
     <link rel="alternate" hrefLang="de" href="${BASE_URL}de/" />
     <link rel="alternate" hrefLang="fr" href="${BASE_URL}fr/" />
     <link rel="alternate" hrefLang="it" href="${BASE_URL}it/" />
+    <link rel="alternate" hrefLang="pl" href="${BASE_URL}pl/" />
     <link rel="alternate" hrefLang="x-default" href="${BASE_URL}" />
   `;
 }

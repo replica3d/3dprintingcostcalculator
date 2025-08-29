@@ -11,7 +11,7 @@ import { CurrencySwitcher } from './components/CurrencySwitcher';
 import { AdvancedSettings } from './components/AdvancedSettings';
 import { HowToUseGuide } from './components/HowToUseGuide';
 import { FAQ } from './components/FAQ';
-import { DEFAULT_SETTINGS, MATERIALS, MATERIAL_PRICES, DEFAULT_VAT_RATE } from './constants';
+import { DEFAULT_SETTINGS, MATERIALS, MATERIAL_PRICES, DEFAULT_VAT_RATES } from './constants';
 import { calculateCosts } from './utils/calculations';
 import { useLanguage } from './context/LanguageContext';
 import { useCurrency } from './context/CurrencyContext';
@@ -20,6 +20,10 @@ import type { CalculatorInputs, CostBreakdown } from './types';
 function App() {
   const { t, language } = useLanguage();
   const { currency } = useCurrency();
+  
+  // Get default VAT rate based on language
+  const getDefaultVATRate = () => DEFAULT_VAT_RATES[language] || DEFAULT_VAT_RATES.en;
+  
   const [inputs, setInputs] = useState<CalculatorInputs>({
     partName: '',
     material: MATERIALS[0],
@@ -30,7 +34,7 @@ function App() {
     laborRequired: '',
     hardwareCost: '',
     packagingCost: '',
-    vatRate: DEFAULT_VAT_RATE
+    vatRate: getDefaultVATRate()
   });
 
   const [settings, setSettings] = useState(DEFAULT_SETTINGS);

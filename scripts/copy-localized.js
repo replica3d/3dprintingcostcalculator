@@ -1,7 +1,7 @@
 import { copyFile, mkdir } from 'fs/promises';
 import { join } from 'path';
 
-const languages = ['es', 'de', 'fr', 'it'];
+const languages = ['es', 'de', 'fr', 'it', 'pl'];
 const sourceDir = 'public';
 const distDir = 'dist';
 

@@ -10,7 +10,14 @@ interface CurrencyContextType {
 const CurrencyContext = createContext<CurrencyContextType | undefined>(undefined);
 
 export function CurrencyProvider({ children }: { children: React.ReactNode }) {
-  const [currency, setCurrency] = useState<Currency>('EUR');
+  // Detect language and set default currency
+  const getDefaultCurrency = (): Currency => {
+    const pathSegments = window.location.pathname.split('/');
+    const lang = pathSegments[1];
+    return lang === 'pl' ? 'PLN' : 'EUR';
+  };
+
+  const [currency, setCurrency] = useState<Currency>(getDefaultCurrency());
 
   const switchCurrency = (newCurrency: Currency) => {
     setCurrency(newCurrency);

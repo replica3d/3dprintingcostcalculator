@@ -48,5 +48,6 @@ export const languages: Record<Language, string> = {
   es: 'Español',
   de: 'Deutsch',
   fr: 'Français',
-  it: 'Italiano'
+  it: 'Italiano',
+  pl: 'Polski'
 };
